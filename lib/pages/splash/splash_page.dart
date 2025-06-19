@@ -64,8 +64,8 @@ class _SplashPageState extends State<SplashPage> {
       ),
       child: Scaffold(
         backgroundColor: Shared.instance.isMainColor
-            ? AppColors.accentDark.withValues(alpha: .6)
-            : Configs.listColorTheme.first.withValues(alpha: .6),
+            ? AppColors.accentDark.withValues(alpha: .0)
+            : Configs.listColorTheme.first.withValues(alpha: .0),
         body: _buildBody(),
       ),
     );
@@ -73,10 +73,12 @@ class _SplashPageState extends State<SplashPage> {
 
   Widget _buildBody() {
     return Column(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const Spacer(),
         Center(child: AssetsClass.images.imageIconApp.image(width: 87)),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Text(
@@ -84,15 +86,19 @@ class _SplashPageState extends State<SplashPage> {
             style: Shared.instance.theme.textTheme.titleLarge?.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: Colors.grey,
             ),
           ),
-        ),
-        Text(
-          context.l10n.celebratingEverylovemilestone,
-          style: Shared.instance.theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
+        ),    
+        const Spacer(),   
+        Padding(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: Text(
+            context.l10n.celebratingEverylovemilestone,
+            style: Shared.instance.theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.grey,
+            ),
           ),
         ),
       ],

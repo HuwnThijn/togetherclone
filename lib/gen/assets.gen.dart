@@ -122,13 +122,13 @@ class $AssetsIconsGen {
   SvgGenImage get arrowRight =>
       const SvgGenImage('assets/icons/arrow_right.svg');
 
-  /// File path: assets/icons/calendar_clock.svg
-  SvgGenImage get calendarClock =>
-      const SvgGenImage('assets/icons/calendar_clock.svg');
-
   /// File path: assets/icons/calendar_heart.svg
   SvgGenImage get calendarHeart =>
       const SvgGenImage('assets/icons/calendar_heart.svg');
+
+  /// File path: assets/icons/calender_clock.svg
+  SvgGenImage get calenderClock =>
+      const SvgGenImage('assets/icons/calender_clock.svg');
 
   /// File path: assets/icons/camera.svg
   SvgGenImage get camera => const SvgGenImage('assets/icons/camera.svg');
@@ -143,6 +143,14 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/edit.svg
   SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
+
+  /// File path: assets/icons/gender_female.svg
+  SvgGenImage get genderFemale =>
+      const SvgGenImage('assets/icons/gender_female.svg');
+
+  /// File path: assets/icons/gender_male.svg
+  SvgGenImage get genderMale =>
+      const SvgGenImage('assets/icons/gender_male.svg');
 
   /// File path: assets/icons/message_text.svg
   SvgGenImage get messageText =>
@@ -167,12 +175,14 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
     arrowRight,
-    calendarClock,
     calendarHeart,
+    calenderClock,
     camera,
     circleUser,
     circleXmark,
     edit,
+    genderFemale,
+    genderMale,
     messageText,
     picture,
     rectangleHistoryCirclePlus,

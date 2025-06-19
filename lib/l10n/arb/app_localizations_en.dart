@@ -13,7 +13,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get celebratingEverylovemilestone =>
-      'Counting the days, nurturing love';
+      'The box contains beautiful memories of the couple';
 
   @override
   String get language => 'Language';
