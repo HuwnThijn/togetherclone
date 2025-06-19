@@ -22,7 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get choose => 'Choose';
 
   @override
-  String get setTheAnniversarystartdate => 'Set the anniversary start date';
+  String get setTheAnniversarystartdate => 'The day you started dating';
 
   @override
   String get setUpphotos => ' Set up photos';

@@ -3,7 +3,7 @@
   "celebratingEverylovemilestone": "The box contains beautiful memories of the couple",
   "language": "Language",
   "choose": "Choose",
-  "setTheAnniversarystartdate": "Set the anniversary start date",
+  "setTheAnniversarystartdate": "The day you started dating",
   "setUpphotos": " Set up photos",
   "done": "Done",
   "addPhoto": "Add Photo",
@@ -76,5 +76,6 @@
   "weAreupgradingtoserveyoubetterPleasecomebacklater": "We are upgrading to serve you better. Please come back later.",
   "closeApp": "Close App",
   "select": "Select",
-  "termsofConditions": "Terms of Conditions"
+  "termsofConditions": "Terms of Conditions",
+  "confirm": "Confirm"
 }

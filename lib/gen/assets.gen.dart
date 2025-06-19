@@ -118,6 +118,9 @@ class $AssetsFramesGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/arrow_down.svg
+  SvgGenImage get arrowDown => const SvgGenImage('assets/icons/arrow_down.svg');
+
   /// File path: assets/icons/arrow_right.svg
   SvgGenImage get arrowRight =>
       const SvgGenImage('assets/icons/arrow_right.svg');
@@ -132,6 +135,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/camera.svg
   SvgGenImage get camera => const SvgGenImage('assets/icons/camera.svg');
+
+  /// File path: assets/icons/circle_check.svg
+  SvgGenImage get circleCheck =>
+      const SvgGenImage('assets/icons/circle_check.svg');
 
   /// File path: assets/icons/circle_user.svg
   SvgGenImage get circleUser =>
@@ -174,10 +181,12 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+    arrowDown,
     arrowRight,
     calendarHeart,
     calenderClock,
     camera,
+    circleCheck,
     circleUser,
     circleXmark,
     edit,
