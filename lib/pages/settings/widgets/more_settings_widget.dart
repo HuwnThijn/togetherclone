@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:lovejourney/cores/app_colors.dart';
+import 'package:lovejourney/gen/assets.gen.dart';
+import 'package:lovejourney/pages/settings/widgets/button_setting_widget2.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/shared.dart';
@@ -30,7 +33,7 @@ class MoreSettingsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            context.l10n.more,
+            context.l10n.settings.toUpperCase(),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context)
                     .textTheme
@@ -38,7 +41,11 @@ class MoreSettingsWidget extends StatelessWidget {
                     ?.color
                     ?.withValues(alpha: .3)),
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
+            icon: AssetsClass.icons.share.svg(
+              width: 20,
+              color: AppColors.accentDark,
+            ),
             title: context.l10n.shareWithApp,
             onPressed: () {
               if (Platform.isAndroid) {
@@ -52,38 +59,54 @@ class MoreSettingsWidget extends StatelessWidget {
               }
             },
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
             title: context.l10n.reviewApp,
+            icon: AssetsClass.icons.star.svg(
+              width: 20,
+              color: AppColors.accentDark,
+            ),
             onPressed: () async {
               if (await inAppReview.isAvailable()) {
                 inAppReview.requestReview();
               }
             },
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
+            icon: AssetsClass.icons.contact.svg(
+              width: 20,
+              color: AppColors.accentDark,
+            ),
             title: context.l10n.contactUs,
             onPressed: () => launchEmail(email: Configs.emailContact),
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
             title: context.l10n.termsOfService,
+            icon: AssetsClass.icons.term.svg(
+              width: 20,
+              color: AppColors.accentDark,
+            ),
             onPressed: () {
               Navigator.push(context, createRouter(TermsOfConditionsPage()));
             },
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
             title: context.l10n.privacyPolicy,
+            icon: AssetsClass.icons.privacy.svg(
+              width: 20,
+              color: AppColors.accentDark,
+            ),
             onPressed: () {
               Navigator.push(context, createRouter(PrivacyPolicyPage()));
             },
           ),
-          ButtonSettingWidget(
+          ButtonSettingWidget2(
             title: context.l10n.versionApp,
             isLine: false,
             child: Row(
               spacing: 5,
               children: [
                 Text(
-                  'ver',
+                  'Ver',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Theme.of(context)
                             .textTheme

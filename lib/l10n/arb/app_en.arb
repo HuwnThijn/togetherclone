@@ -77,5 +77,13 @@
   "closeApp": "Close App",
   "select": "Select",
   "termsofConditions": "Terms of Conditions",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "yourGender": "Your gender",
+  "general": "General",
+  "startDating": "Start Dating",
+  "username": "Username",
+  "frame": "Frame",
+  "background": "Background",
+  "male": "Male",
+  "female": "Female"
 }

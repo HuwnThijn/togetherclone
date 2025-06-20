@@ -77,5 +77,13 @@
   "closeApp": "关闭应用",
   "select": "选择",
   "termsofConditions": "条款和条件",
-  "confirm": "确认"
+  "confirm": "确认",
+  "yourGender": "您的性别",
+  "general": "常规",
+  "startDating": "开始约会",
+  "username": "用户名",
+  "frame": "框架",
+  "background": "背景",
+  "male": "男",
+  "female": "女"
 }

@@ -247,4 +247,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsofConditions => 'Terms of Conditions';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get yourGender => 'Your gender';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get startDating => 'Start Dating';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get frame => 'Frame';
+
+  @override
+  String get background => 'Background';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
 }

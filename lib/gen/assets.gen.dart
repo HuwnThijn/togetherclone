@@ -148,8 +148,17 @@ class $AssetsIconsGen {
   SvgGenImage get circleXmark =>
       const SvgGenImage('assets/icons/circle_xmark.svg');
 
+  /// File path: assets/icons/contact.svg
+  SvgGenImage get contact => const SvgGenImage('assets/icons/contact.svg');
+
   /// File path: assets/icons/edit.svg
   SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
+
+  /// File path: assets/icons/frame.svg
+  SvgGenImage get frame => const SvgGenImage('assets/icons/frame.svg');
+
+  /// File path: assets/icons/gender.svg
+  SvgGenImage get gender => const SvgGenImage('assets/icons/gender.svg');
 
   /// File path: assets/icons/gender_female.svg
   SvgGenImage get genderFemale =>
@@ -166,6 +175,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/picture.svg
   SvgGenImage get picture => const SvgGenImage('assets/icons/picture.svg');
 
+  /// File path: assets/icons/privacy.svg
+  SvgGenImage get privacy => const SvgGenImage('assets/icons/privacy.svg');
+
   /// File path: assets/icons/rectangle_history_circle_plus.svg
   SvgGenImage get rectangleHistoryCirclePlus =>
       const SvgGenImage('assets/icons/rectangle_history_circle_plus.svg');
@@ -175,6 +187,15 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/settings.svg
   SvgGenImage get settings => const SvgGenImage('assets/icons/settings.svg');
+
+  /// File path: assets/icons/share.svg
+  SvgGenImage get share => const SvgGenImage('assets/icons/share.svg');
+
+  /// File path: assets/icons/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
+
+  /// File path: assets/icons/term.svg
+  SvgGenImage get term => const SvgGenImage('assets/icons/term.svg');
 
   /// File path: assets/icons/trash.svg
   SvgGenImage get trash => const SvgGenImage('assets/icons/trash.svg');
@@ -189,14 +210,21 @@ class $AssetsIconsGen {
     circleCheck,
     circleUser,
     circleXmark,
+    contact,
     edit,
+    frame,
+    gender,
     genderFemale,
     genderMale,
     messageText,
     picture,
+    privacy,
     rectangleHistoryCirclePlus,
     resources,
     settings,
+    share,
+    star,
+    term,
     trash,
   ];
 }

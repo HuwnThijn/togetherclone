@@ -111,7 +111,7 @@ abstract class AppLocalizations {
   /// No description provided for @celebratingEverylovemilestone.
   ///
   /// In en, this message translates to:
-  /// **'Counting the days, nurturing love'**
+  /// **'The box contains beautiful memories of the couple'**
   String get celebratingEverylovemilestone;
 
   /// No description provided for @language.
@@ -129,7 +129,7 @@ abstract class AppLocalizations {
   /// No description provided for @setTheAnniversarystartdate.
   ///
   /// In en, this message translates to:
-  /// **'Set the anniversary start date'**
+  /// **'The day you started dating'**
   String get setTheAnniversarystartdate;
 
   /// No description provided for @setUpphotos.
@@ -569,6 +569,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Conditions'**
   String get termsofConditions;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @yourGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Your gender'**
+  String get yourGender;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @startDating.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Dating'**
+  String get startDating;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @frame.
+  ///
+  /// In en, this message translates to:
+  /// **'Frame'**
+  String get frame;
+
+  /// No description provided for @background.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get background;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
 }
 
 class _AppLocalizationsDelegate

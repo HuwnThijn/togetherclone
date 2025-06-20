@@ -77,5 +77,13 @@
   "closeApp": "ऐप बंद करें",
   "select": "चुनें",
   "termsofConditions": "नियम और शर्तें",
-  "confirm": "पुष्टि करें"
+  "confirm": "पुष्टि करें",
+  "yourGender": "आपका लिंग",
+  "general": "सामान्य",
+  "startDating": "डेटिंग शुरू करें",
+  "username": "उपयोगकर्ता नाम",
+  "frame": "फ़्रेम",
+  "background": "पृष्ठभूमि",
+  "male": "पुरुष",
+  "female": "महिला"
 }

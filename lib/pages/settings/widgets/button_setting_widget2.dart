@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 
-class ButtonSettingWidget extends StatelessWidget {
-  const ButtonSettingWidget(
+class ButtonSettingWidget2 extends StatelessWidget {
+  const ButtonSettingWidget2(
       {super.key,
       required this.title,
       this.child,
@@ -23,10 +23,11 @@ class ButtonSettingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final childD = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          icon ?? SizedBox(width: 10),
+          icon ?? SizedBox(),
+          SizedBox(width: 9,),
           Expanded(
             child: Text(
               title,
@@ -34,12 +35,7 @@ class ButtonSettingWidget extends StatelessWidget {
             ),
           ),
           child ?? SizedBox(),
-          icon ??
-              Icon(
-                Icons.arrow_right_outlined,
-                size: 30,
-                color: AppColors.accentDark,
-              ),
+
           SizedBox(width: icon == null ? 5 : 10)
         ],
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lovejourney/cores/shared.dart';
+import 'package:lovejourney/pages/gender/widgets/button_gender_widget.dart';
 import 'package:lovejourney/pages/home_page.dart';
+import 'package:lovejourney/pages/popups/changed_date_popup.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
@@ -46,95 +48,14 @@ class _SetDatePageState extends State<SetDatePage> {
   }
 
   Future<void> _showDatePickerPopup() async {
-    DateTime tempDate = dating;
     final picked = await showDialog<DateTime>(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(28),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.10),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    const Spacer(),
-                    Text(
-                      'Select date',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child:
-                          const Icon(Icons.close, size: 22, color: Colors.grey),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  height: 200,
-                  child: CupertinoTheme(
-                    data: CupertinoThemeData(
-                      textTheme: CupertinoTextThemeData(
-                        dateTimePickerTextStyle:
-                            Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                    child: CupertinoDatePicker(
-                      initialDateTime: tempDate,
-                      mode: CupertinoDatePickerMode.date,
-                      maximumDate: DateTime.now(),
-                      use24hFormat: true,
-                      showDayOfWeek: true,
-                      onDateTimeChanged: (DateTime newDate) {
-                        tempDate = newDate;
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    onPressed: () => Navigator.pop(context, tempDate),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.accentDark,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: Text(
-                      context.l10n.select,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => ChangedDatePopup(
+              initialDate: dating,
+              title: context.l10n.pickaDate,
+              maximumDate: DateTime.now(),
+            ));
     if (picked != null) {
       setState(() {
         dating = picked;
@@ -159,7 +80,12 @@ class _SetDatePageState extends State<SetDatePage> {
                     gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.center,
-                  colors: [Colors.white, Color(0xFFFFFFFF), Color(0xCCFFFFFF), Colors.transparent],
+                  colors: [
+                    Colors.white,
+                    Color(0xFFFFFFFF),
+                    Color(0xCCFFFFFF),
+                    Colors.transparent
+                  ],
                   stops: [.0, .1, .45, 1.0],
                 )),
               ),
@@ -176,7 +102,6 @@ class _SetDatePageState extends State<SetDatePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 10,
                 children: [
-                  
                   Center(
                     child: Text(context.l10n.setTheAnniversarystartdate,
                         style: Theme.of(context)
@@ -208,8 +133,8 @@ class _SetDatePageState extends State<SetDatePage> {
                   GestureDetector(
                     onTap: _showDatePickerPopup,
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 14),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(14),
@@ -229,7 +154,8 @@ class _SetDatePageState extends State<SetDatePage> {
                                   ? 'DD/MM/YYYY'
                                   : "${dating.day.toString().padLeft(2, '0')}/${dating.month.toString().padLeft(2, '0')}/${dating.year}",
                               style: TextStyle(
-                                color: dating == null ? Colors.grey : Colors.black,
+                                color:
+                                    dating == null ? Colors.grey : Colors.black,
                                 fontSize: 16,
                               ),
                             ),
@@ -247,7 +173,7 @@ class _SetDatePageState extends State<SetDatePage> {
                     height: 32,
                   ),
                   Center(
-                    child: Text(context.l10n.setTheAnniversarystartdate,
+                    child: Text(context.l10n.yourGender,
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge
@@ -257,26 +183,34 @@ class _SetDatePageState extends State<SetDatePage> {
                     height: 18,
                   ),
                   Column(
+                    spacing: 10,
                     children: [
-                      _genderOption(
-                        icon:
-                            AssetsClass.icons.genderMale.svg(width: 24, height: 24),
-                        label: "Male",
-                        value: "male",
-                        color: Colors.black87,
-                        selectedColor: Colors.pink,
-                        selected: gender == "male",
-                      ),
-                      const SizedBox(height: 12),
-                      _genderOption(
-                        icon: AssetsClass.icons.genderFemale
-                            .svg(width: 24, height: 24),
-                        label: "Female",
-                        value: "female",
-                        color: Colors.black87,
-                        selectedColor: Colors.pink,
-                        selected: gender == "female",
-                      ),
+                      ButtonGenderWidget(
+                          icon: AssetsClass.icons.genderMale
+                              .svg(width: 24, height: 24),
+                          label: context.l10n.male,
+                          value: 'male',
+                          color: Colors.black87,
+                          selectedColor: AppColors.accentDark,
+                          selected: gender == "male",
+                          onTap: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          }),
+                      ButtonGenderWidget(
+                          icon: AssetsClass.icons.genderFemale
+                              .svg(width: 24, height: 24),
+                          label: context.l10n.female,
+                          value: 'female',
+                          color: Colors.black87,
+                          selectedColor: AppColors.accentDark,
+                          selected: gender == "female",
+                          onTap: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          }),
                     ],
                   ),
                   TextButton(
@@ -294,6 +228,8 @@ class _SetDatePageState extends State<SetDatePage> {
                             }
                           : null,
                       style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
                         minimumSize:
                             Size(Device.width - 30, Configs.commonHeightButton),
                         backgroundColor: gender != null
@@ -303,7 +239,7 @@ class _SetDatePageState extends State<SetDatePage> {
                             : Colors.grey.shade300,
                       ),
                       child: Text(
-                        context.l10n.select,
+                        context.l10n.confirm,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Colors.white,
                             fontSize: 17,
@@ -391,4 +327,5 @@ class _SetDatePageState extends State<SetDatePage> {
       ),
     );
   }
+  
 }

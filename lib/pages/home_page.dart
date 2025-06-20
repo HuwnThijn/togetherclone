@@ -16,6 +16,7 @@ import 'package:lovejourney/pages/bottomsheets/comfirm_pass_bottomsheet.dart';
 import 'package:lovejourney/pages/homeviews/countlove_view.dart';
 import 'package:lovejourney/pages/love_story/love_story_page.dart';
 import 'package:lovejourney/pages/settings/settings_page.dart';
+import 'package:lovejourney/pages/settings/sidebar_setting.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -160,15 +161,48 @@ class _HomePageState extends State<HomePage> {
                         color: Shared.instance.isMainColor
                             ? AppColors.accentDark
                             : Colors.white)),
+                // IconButton(
+                //   onPressed: () =>
+                //       Navigator.push(context, createRouter(SettingsPage())),
+                //   icon: AssetsClass.icons.settings.svg(
+                //       width: 24,
+                //       color: Shared.instance.isMainColor
+                //           ? AppColors.accentDark
+                //           : Colors.white),
+                // ),
+                // Trong màn hình chính, thêm vào AppBar hoặc FloatingActionButton
                 IconButton(
-                  onPressed: () =>
-                      Navigator.push(context, createRouter(SettingsPage())),
                   icon: AssetsClass.icons.settings.svg(
-                      width: 24,
-                      color: Shared.instance.isMainColor
-                          ? AppColors.accentDark
-                          : Colors.white),
-                ),
+                    width: 30,
+                    color: Shared.instance.isMainColor
+                        ? AppColors.accentDark
+                        : Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const CustomSidebar(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+                          var tween = Tween(begin: begin, end: end).chain(
+                            CurveTween(curve: curve),
+                          );
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 300),
+                        opaque: false,
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),

@@ -13,7 +13,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get celebratingEverylovemilestone =>
-      'दिन गिनते हुए, प्यार को संजोते हुए';
+      'इस बॉक्स में जोड़े की सुंदर यादें हैं';
 
   @override
   String get language => 'भाषा';
@@ -22,13 +22,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get choose => 'चुनें';
 
   @override
-  String get setTheAnniversarystartdate => 'सालगिरह की प्रारंभ तिथि सेट करें';
+  String get setTheAnniversarystartdate => 'आपके डेटिंग की शुरुआत की तारीख';
 
   @override
   String get setUpphotos => 'फोटो सेट करें';
 
   @override
-  String get done => 'समाप्त';
+  String get done => 'हो गया';
 
   @override
   String get addPhoto => 'फोटो जोड़ें';
@@ -40,7 +40,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get days => 'दिन';
 
   @override
-  String get theAnniversarystartdate => 'सालगिरह की प्रारंभ तिथि';
+  String get theAnniversarystartdate => 'सालगिरह की शुरुआत की तारीख';
 
   @override
   String get years => 'साल';
@@ -55,10 +55,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get changeAvatar => 'अवतार बदलें';
 
   @override
-  String get changeUsername => 'यूज़रनेम बदलें';
+  String get changeUsername => 'उपयोगकर्ता नाम बदलें';
 
   @override
-  String get changeDOB => 'जन्म तिथि बदलें';
+  String get changeDOB => 'जन्मतिथि बदलें';
 
   @override
   String get deleteAvatar => 'अवतार हटाएं';
@@ -79,20 +79,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get loveStory => 'प्रेम कहानी';
 
   @override
-  String get youTwodonthavealovestory =>
-      'आप दोनों के पास कोई प्रेम कहानी नहीं है!';
+  String get youTwodonthavealovestory => 'आप दोनों की कोई प्रेम कहानी नहीं है!';
 
   @override
   String get addNewlovestory => 'नई प्रेम कहानी जोड़ें';
 
   @override
-  String get enterThecontentofyourstory => 'अपनी कहानी की सामग्री दर्ज करें';
+  String get enterThecontentofyourstory => 'अपनी कहानी का विवरण दर्ज करें';
 
   @override
   String get pickaDate => 'तारीख चुनें';
 
   @override
-  String get detailStory => 'विस्तृत कहानी';
+  String get detailStory => 'कहानी का विवरण';
 
   @override
   String get editStory => 'कहानी संपादित करें';
@@ -108,7 +107,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get areYousureyouwanttodeletestory =>
-      'क्या आप वाकई कहानी हटाना चाहते हैं?';
+      'क्या आप निश्चित हैं कि आप कहानी हटाना चाहते हैं?';
 
   @override
   String get settings => 'सेटिंग्स';
@@ -118,7 +117,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get removeAdsandunlockfeatures =>
-      'विज्ञापन हटाएं और सुविधाएँ अनलॉक करें';
+      'विज्ञापनों को हटाएं और सुविधाओं को अनलॉक करें';
 
   @override
   String get changeWallpaper => 'वॉलपेपर बदलें';
@@ -127,13 +126,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get changeTheme => 'थीम बदलें';
 
   @override
-  String get changeIconApp => 'ऐप आइकन बदलें';
+  String get changeIconApp => 'ऐप का आइकन बदलें';
 
   @override
   String get usePasswordLock => 'पासवर्ड लॉक का उपयोग करें';
 
   @override
-  String get more => 'अधिक';
+  String get more => 'और';
 
   @override
   String get shareWithApp => 'ऐप के साथ साझा करें';
@@ -148,7 +147,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get termsOfService => 'सेवा की शर्तें';
 
   @override
-  String get contactUs => 'हमसे संपर्क करें';
+  String get contactUs => 'संपर्क करें';
 
   @override
   String get versionApp => 'ऐप संस्करण';
@@ -160,64 +159,64 @@ class AppLocalizationsId extends AppLocalizations {
   String get unlock => 'अनलॉक करें';
 
   @override
-  String get doYouwanttounlock => 'क्या आप अनलॉक करना चाहते हैं';
+  String get doYouwanttounlock => 'क्या आप अनलॉक करना चाहते हैं?';
 
   @override
-  String get withx => 'के साथ';
+  String get withx => 'साथ';
 
   @override
   String get failed => 'असफल';
 
   @override
   String get yourCoinsarenotenoughtounlockpleasegotothestoretobuymorecoins =>
-      'आपके सिक्के अनलॉक करने के लिए पर्याप्त नहीं हैं। कृपया अधिक सिक्के खरीदने के लिए स्टोर पर जाएं।';
+      'आपके पास पर्याप्त सिक्के नहीं हैं। कृपया अधिक सिक्के खरीदने के लिए स्टोर पर जाएं।';
 
   @override
-  String get gotoShoping => 'खरीदारी पर जाएं';
+  String get gotoShoping => 'शॉपिंग पर जाएं';
 
   @override
-  String get functionunderdevelopment => 'कार्य प्रगति पर है';
+  String get functionunderdevelopment => 'कार्य प्रगति में है';
 
   @override
-  String get shopstar => 'हीरा स्टोर';
+  String get shopstar => 'डायमंड्स स्टोर';
 
   @override
-  String get removeAds => 'विज्ञापन हटाएं';
+  String get removeAds => 'विज्ञापनों को हटाएं';
 
   @override
-  String get unlockAlltools => 'सभी टूल अनलॉक करें';
+  String get unlockAlltools => 'सभी टूल्स को अनलॉक करें';
 
   @override
   String get chooseYoursubscription => 'अपनी सदस्यता चुनें';
 
   @override
-  String get goSubscription => 'सदस्यता लें';
+  String get goSubscription => 'सदस्यता पर जाएं';
 
   @override
   String get recurringPaymentscancelanytime =>
-      'आवर्ती भुगतान, कभी भी रद्द करें';
+      'दोहराए गए भुगतान, कभी भी रद्द करें';
 
   @override
   String get recurringPaymentscancelanytimeSub =>
-      'यदि परीक्षण अवधि समाप्त हो जाती है, तो आपके द्वारा पहले चयनित योजना के नियमों और मूल्य के अनुसार आपसे स्वचालित रूप से शुल्क लिया जाएगा। आपकी सदस्यता स्वचालित रूप से नवीनीकृत हो जाएगी जब तक कि आप इसे समाप्ति तिथि से कम से कम 24 घंटे पहले रद्द नहीं कर देते। आप किसी भी समय Google Play में इसे रद्द कर सकते हैं।';
+      'यदि परीक्षण अवधि समाप्त हो जाती है, तो आपको अपने द्वारा पहले चुने गए योजना के अनुसार स्वचालित रूप से सदस्यता शुल्क लिया जाएगा। आपकी सदस्यता स्वचालित रूप से नवीनीकरण होगी, जब तक आप समाप्ति तिथि से कम से कम 24 घंटे पहले इसे रद्द नहीं करते। आप इसे कभी भी Google Play पर रद्द कर सकते हैं।';
 
   @override
-  String get restore => 'पुनर्स्थापित करें';
+  String get restore => 'बहाल करें';
 
   @override
-  String get terms => 'नियम';
+  String get terms => 'शर्तें';
 
   @override
   String get privacy => 'गोपनीयता';
 
   @override
-  String get upgradePremium => 'प्रीमियम अपग्रेड करें';
+  String get upgradePremium => 'प्रीमियम में अपग्रेड करें';
 
   @override
   String get enterApasscodeof4digits => '4 अंकों का पासकोड दर्ज करें';
 
   @override
-  String get reEnternewpasscode => 'नया पासकोड फिर से दर्ज करें';
+  String get reEnternewpasscode => 'नया पासकोड पुनः दर्ज करें';
 
   @override
   String get passcodeDoesnotmatch => 'पासकोड मेल नहीं खाता';
@@ -226,20 +225,20 @@ class AppLocalizationsId extends AppLocalizations {
   String get changeShapeAvatar => 'अवतार का आकार बदलें';
 
   @override
-  String get newVersionAvailable => 'नया संस्करण उपलब्ध है';
+  String get newVersionAvailable => 'नई संस्करण उपलब्ध है';
 
   @override
-  String get updateNewVersion => 'नया संस्करण अपडेट करें';
+  String get updateNewVersion => 'नई संस्करण अपडेट करें';
 
   @override
-  String get remindMeLater => 'मुझे बाद में याद दिलाएं';
+  String get remindMeLater => 'बाद में याद दिलाएं';
 
   @override
-  String get theAppisundermaintenance => 'ऐप रखरखाव में है';
+  String get theAppisundermaintenance => 'ऐप में रखरखाव चल रहा है';
 
   @override
   String get weAreupgradingtoserveyoubetterPleasecomebacklater =>
-      'हम आपको बेहतर सेवा देने के लिए उन्नयन कर रहे हैं। कृपया बाद में वापस आएं।';
+      'हम आपको बेहतर सेवा देने के लिए अपग्रेड कर रहे हैं। कृपया बाद में वापस आएं।';
 
   @override
   String get closeApp => 'ऐप बंद करें';
@@ -249,4 +248,31 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get termsofConditions => 'नियम और शर्तें';
+
+  @override
+  String get confirm => 'पुष्टि करें';
+
+  @override
+  String get yourGender => 'आपका लिंग';
+
+  @override
+  String get general => 'सामान्य';
+
+  @override
+  String get startDating => 'डेटिंग शुरू करें';
+
+  @override
+  String get username => 'उपयोगकर्ता नाम';
+
+  @override
+  String get frame => 'फ़्रेम';
+
+  @override
+  String get background => 'पृष्ठभूमि';
+
+  @override
+  String get male => 'पुरुष';
+
+  @override
+  String get female => 'महिला';
 }

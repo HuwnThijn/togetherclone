@@ -12,7 +12,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get preferredLanguage => 'Tiếng Việt';
 
   @override
-  String get celebratingEverylovemilestone => 'Đếm ngày, nuôi dưỡng tình yêu';
+  String get celebratingEverylovemilestone =>
+      'Hộp chứa những kỷ niệm đẹp của cặp đôi';
 
   @override
   String get language => 'Ngôn ngữ';
@@ -21,10 +22,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get choose => 'Chọn';
 
   @override
-  String get setTheAnniversarystartdate => 'Chọn ngày bắt đầu kỷ niệm';
+  String get setTheAnniversarystartdate => 'Ngày bắt đầu mối quan hệ';
 
   @override
-  String get setUpphotos => 'Chọn ảnh';
+  String get setUpphotos => 'Thiết lập ảnh';
 
   @override
   String get done => 'Xong';
@@ -33,7 +34,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get addPhoto => 'Thêm ảnh';
 
   @override
-  String get inlove => 'Yêu thương';
+  String get inlove => 'Đang yêu';
 
   @override
   String get days => 'Ngày';
@@ -78,8 +79,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get loveStory => 'Câu chuyện tình yêu';
 
   @override
-  String get youTwodonthavealovestory =>
-      'Bạn hai không có câu chuyện tình yêu!';
+  String get youTwodonthavealovestory => 'Hai bạn chưa có câu chuyện tình yêu!';
 
   @override
   String get addNewlovestory => 'Thêm câu chuyện tình yêu mới';
@@ -107,7 +107,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get areYousureyouwanttodeletestory =>
-      'Bạn có chắc chắn muốn xóa câu chuyện?';
+      'Bạn có chắc chắn muốn xóa câu chuyện không?';
 
   @override
   String get settings => 'Cài đặt';
@@ -117,13 +117,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get removeAdsandunlockfeatures =>
-      'Loại bỏ quảng cáo và mở khóa tính năng';
+      'Loại bỏ quảng cáo và mở khóa các tính năng';
 
   @override
   String get changeWallpaper => 'Thay đổi hình nền';
 
   @override
-  String get changeTheme => 'Thay đổi chủ đề';
+  String get changeTheme => 'Thay đổi giao diện';
 
   @override
   String get changeIconApp => 'Thay đổi biểu tượng ứng dụng';
@@ -147,7 +147,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get termsOfService => 'Điều khoản dịch vụ';
 
   @override
-  String get contactUs => 'Liên hệ với chúng tôi';
+  String get contactUs => 'Liên hệ chúng tôi';
 
   @override
   String get versionApp => 'Phiên bản ứng dụng';
@@ -159,7 +159,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get unlock => 'Mở khóa';
 
   @override
-  String get doYouwanttounlock => 'Bạn có muốn mở khóa';
+  String get doYouwanttounlock => 'Bạn có muốn mở khóa không';
 
   @override
   String get withx => 'Với';
@@ -169,16 +169,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get yourCoinsarenotenoughtounlockpleasegotothestoretobuymorecoins =>
-      'Số xu của bạn không đủ để mở khóa. Vui lòng đến cửa hàng để mua thêm xu.';
+      'Số coin của bạn không đủ để mở khóa. Vui lòng vào cửa hàng để mua thêm coin.';
 
   @override
   String get gotoShoping => 'Đi mua sắm';
 
   @override
-  String get functionunderdevelopment => 'Chức năng đang được phát triển';
+  String get functionunderdevelopment => 'Chức năng đang phát triển';
 
   @override
-  String get shopstar => 'Của hàng kim cương';
+  String get shopstar => 'Cửa hàng kim cương';
 
   @override
   String get removeAds => 'Loại bỏ quảng cáo';
@@ -187,18 +187,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get unlockAlltools => 'Mở khóa tất cả công cụ';
 
   @override
-  String get chooseYoursubscription => 'Chọn gói đăng ký';
+  String get chooseYoursubscription => 'Chọn gói đăng ký của bạn';
 
   @override
   String get goSubscription => 'Đi đăng ký';
 
   @override
   String get recurringPaymentscancelanytime =>
-      'Thanh toán định kỳ, hủy bất kỳ lúc nào';
+      'Thanh toán định kỳ, hủy bất cứ lúc nào';
 
   @override
   String get recurringPaymentscancelanytimeSub =>
-      'Nếu thời gian dùng thử kết thúc, bạn sẽ tự động bị tính phí theo điều khoản và mức giá của gói mà bạn đã chọn trước đó. Gói đăng ký của bạn sẽ tự động gia hạn, trừ khi bạn hủy ít nhất 24 giờ trước ngày hết hạn. Bạn có thể hủy bất kỳ lúc nào trên Google Play.';
+      'Nếu thời gian dùng thử kết thúc, bạn sẽ bị tính phí đăng ký tự động theo các điều khoản và mức giá mà bạn đã chọn trước đó. Đăng ký của bạn sẽ tự động gia hạn trừ khi bạn hủy ít nhất 24 giờ trước ngày hết hạn. Bạn có thể hủy bất kỳ lúc nào trên Google Play.';
 
   @override
   String get restore => 'Khôi phục';
@@ -207,19 +207,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get terms => 'Điều khoản';
 
   @override
-  String get privacy => 'Chính sách bảo mật';
+  String get privacy => 'Bảo mật';
 
   @override
-  String get upgradePremium => 'Nâng cấp Premium';
+  String get upgradePremium => 'Nâng cấp lên Premium';
 
   @override
-  String get enterApasscodeof4digits => 'Nhập mã bảo mật 4 chữ số';
+  String get enterApasscodeof4digits => 'Nhập mã khóa 4 chữ số';
 
   @override
-  String get reEnternewpasscode => 'Nhập lại mã bảo mật mới';
+  String get reEnternewpasscode => 'Nhập lại mã khóa mới';
 
   @override
-  String get passcodeDoesnotmatch => 'Mã bảo mật không khớp';
+  String get passcodeDoesnotmatch => 'Mã khóa không khớp';
 
   @override
   String get changeShapeAvatar => 'Thay đổi hình dạng ảnh đại diện';
@@ -234,7 +234,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get remindMeLater => 'Nhắc tôi sau';
 
   @override
-  String get theAppisundermaintenance => 'Ứng dụng đang được bảo trì';
+  String get theAppisundermaintenance => 'Ứng dụng đang bảo trì';
 
   @override
   String get weAreupgradingtoserveyoubetterPleasecomebacklater =>
@@ -247,5 +247,32 @@ class AppLocalizationsVi extends AppLocalizations {
   String get select => 'Chọn';
 
   @override
-  String get termsofConditions => 'Điều khoản';
+  String get termsofConditions => 'Điều khoản và Điều kiện';
+
+  @override
+  String get confirm => 'Xác nhận';
+
+  @override
+  String get yourGender => 'Giới tính của bạn';
+
+  @override
+  String get general => 'Chung';
+
+  @override
+  String get startDating => 'Bắt đầu hẹn hò';
+
+  @override
+  String get username => 'Tên người dùng';
+
+  @override
+  String get frame => 'Khung';
+
+  @override
+  String get background => 'Ảnh nền';
+
+  @override
+  String get male => 'Nam';
+
+  @override
+  String get female => 'Nữ';
 }

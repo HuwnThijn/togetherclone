@@ -77,5 +77,13 @@
   "closeApp": "Đóng ứng dụng",
   "select": "Chọn",
   "termsofConditions": "Điều khoản và Điều kiện",
-  "confirm": "Xác nhận"
+  "confirm": "Xác nhận",
+  "yourGender": "Giới tính của bạn",
+  "general": "Chung",
+  "startDating": "Bắt đầu hẹn hò",
+  "username": "Tên người dùng",
+  "frame": "Khung",
+  "background": "Ảnh nền",
+  "male": "Nam",
+  "female": "Nữ"
 }
