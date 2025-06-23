@@ -280,4 +280,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get birthday => 'Birthday';
+
+  @override
+  String get memoriesMoment => 'Memories Moment';
+
+  @override
+  String get newMemory => 'New Memory';
+
+  @override
+  String get youDonthaveanymemoriesyet => 'You don\'t have any memories yet!';
+
+  @override
+  String get photoBackground => 'Photo Background';
+
+  @override
+  String get upload => 'Upload';
 }

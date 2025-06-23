@@ -87,5 +87,10 @@
   "male": "Male",
   "female": "Female",
   "enterUsername": "Enter Username",
-  "birthday": "Birthday"
+  "birthday": "Birthday",
+  "memoriesMoment": "Memories Moment",
+  "newMemory": "New Memory",
+  "youDonthaveanymemoriesyet": "You don't have any memories yet!",
+  "photoBackground": "Photo Background",
+  "upload": "Upload"
 }

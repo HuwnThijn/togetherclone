@@ -87,5 +87,10 @@
   "male": "Nam",
   "female": "Nữ",
   "enterUsername": "Nhập tên người dùng",
-  "birthday": "Ngày sinh"
+  "birthday": "Ngày sinh",
+  "memoriesMoment": "Khoảnh khắc kỷ niệm",
+  "newMemory": "Kỷ niệm mới",
+  "youDonthaveanymemoriesyet": "Bạn chưa có bất kỳ kỷ niệm nào!",
+  "photoBackground": "Ảnh nền",
+  "upload": "Tải lên"
 }

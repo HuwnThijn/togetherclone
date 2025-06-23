@@ -87,5 +87,10 @@
   "male": "男",
   "female": "女",
   "enterUsername": "输入用户名",
-  "birthday": "生日"
+  "birthday": "生日",
+  "memoriesMoment": "回忆时刻",
+  "newMemory": "新回忆",
+  "youDonthaveanymemoriesyet": "你还没有任何回忆！",
+  "photoBackground": "照片背景",
+  "upload": "上传"
 }

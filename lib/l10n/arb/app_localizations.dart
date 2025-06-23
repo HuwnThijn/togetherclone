@@ -635,6 +635,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Birthday'**
   String get birthday;
+
+  /// No description provided for @memoriesMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories Moment'**
+  String get memoriesMoment;
+
+  /// No description provided for @newMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'New Memory'**
+  String get newMemory;
+
+  /// No description provided for @youDonthaveanymemoriesyet.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have any memories yet!'**
+  String get youDonthaveanymemoriesyet;
+
+  /// No description provided for @photoBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Background'**
+  String get photoBackground;
+
+  /// No description provided for @upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get upload;
 }
 
 class _AppLocalizationsDelegate

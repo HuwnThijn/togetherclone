@@ -87,5 +87,10 @@
   "male": "पुरुष",
   "female": "महिला",
   "enterUsername": "उपयोगकर्ता नाम दर्ज करें",
-  "birthday": "जन्मदिन"
+  "birthday": "जन्मदिन",
+  "memoriesMoment": "स्मृति क्षण",
+  "newMemory": "नई याद",
+  "youDonthaveanymemoriesyet": "आपके पास अभी तक कोई यादें नहीं हैं!",
+  "photoBackground": "फ़ोटो की पृष्ठभूमि",
+  "upload": "अपलोड करें"
 }

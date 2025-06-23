@@ -277,4 +277,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get birthday => '生日';
+
+  @override
+  String get memoriesMoment => '回忆时刻';
+
+  @override
+  String get newMemory => '新回忆';
+
+  @override
+  String get youDonthaveanymemoriesyet => '你还没有任何回忆！';
+
+  @override
+  String get photoBackground => '照片背景';
+
+  @override
+  String get upload => '上传';
 }

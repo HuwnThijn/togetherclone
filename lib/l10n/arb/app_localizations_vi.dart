@@ -281,4 +281,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get birthday => 'Ngày sinh';
+
+  @override
+  String get memoriesMoment => 'Khoảnh khắc kỷ niệm';
+
+  @override
+  String get newMemory => 'Kỷ niệm mới';
+
+  @override
+  String get youDonthaveanymemoriesyet => 'Bạn chưa có bất kỳ kỷ niệm nào!';
+
+  @override
+  String get photoBackground => 'Ảnh nền';
+
+  @override
+  String get upload => 'Tải lên';
 }

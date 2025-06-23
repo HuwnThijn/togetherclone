@@ -59,18 +59,18 @@ class _AddStoryPageState extends State<AddStoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.accentDark,
+        elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: AssetsClass.icons.arrowRight
-              .svg(width: 24, color: AppColors.accentDark),
+          icon:
+              AssetsClass.icons.arrowRight.svg(width: 24, color: Colors.white),
         ),
         title: Text(
-          widget.item != null
-              ? context.l10n.editStory
-              : context.l10n.addNewlovestory,
+          widget.item != null ? context.l10n.editStory : context.l10n.newMemory,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.accentDark,
+                color: Colors.white,
               ),
         ),
       ),
@@ -83,168 +83,186 @@ class _AddStoryPageState extends State<AddStoryPage> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              spacing: 10,
-              children: [
-                TextButton(
-                  onPressed: () => showModalBottomSheet(
-                    context: context,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => ChangedChooseBottomsheet(
-                      title: context.l10n.pickaDate,
-                    ),
-                  ).then(
-                    (value) {
-                      if (value != null) {
-                        setState(() {
-                          dating = value;
-                        });
-                      }
-                    },
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  Text(
+                    '${context.l10n.username.toUpperCase()}: ',
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
                   ),
-                  style: TextButton.styleFrom(
-                    minimumSize:
-                        Size(double.infinity, Configs.commonHeightButton),
-                    backgroundColor: Theme.of(context).cardColor,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    shape: RoundedRectangleBorder(
+                  Container(
+                    padding: EdgeInsets.only(top: 12),
+                    height: 170,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(Configs.commonRadius),
+                      image: pathImage.isNotEmpty
+                          ? DecorationImage(
+                              image: FileImage(File(pathImage)),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        dating == null
-                            ? context.l10n.pickaDate
-                            : DateFormat('dd-MM-yyyy').format(dating!),
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down_sharp,
-                        color: AppColors.accentDark,
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 170,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(Configs.commonRadius),
-                    image: pathImage.isNotEmpty
-                        ? DecorationImage(
-                            image: FileImage(File(pathImage)),
-                            fit: BoxFit.cover,
+                    child: pathImage.isEmpty
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 15,
+                            children: [
+                              AssetsClass.icons.picture.svg(
+                                  width: 44,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor),
+                              InkWell(
+                                onTap: () => showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) =>
+                                        ChooseOptionCameraBottomsheet()).then(
+                                  (value) {
+                                    if (value is ImageSource) {
+                                      serviceLocator<ImagePicker>()
+                                          .pickImage(source: value)
+                                          .then((value) {
+                                        if (value != null) {
+                                          setState(() {
+                                            pathImage = value.path;
+                                          });
+                                        }
+                                      });
+                                    }
+                                  },
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffBC65FF),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      AssetsClass.icons.file2.svg(
+                                          width: 16,
+                                          color: Colors.white),
+                                      SizedBox(width: 8),
+                                      Text(context.l10n.upload,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.copyWith(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           )
-                        : null,
-                  ),
-                  child: pathImage.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 15,
-                          children: [
-                            AssetsClass.icons.picture.svg(
-                                width: 44,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            InkWell(
-                              onTap: () => showModalBottomSheet(
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) =>
-                                      ChooseOptionCameraBottomsheet()).then(
-                                (value) {
-                                  if (value is ImageSource) {
-                                    serviceLocator<ImagePicker>()
-                                        .pickImage(source: value)
-                                        .then((value) {
-                                      if (value != null) {
-                                        setState(() {
-                                          pathImage = value.path;
-                                        });
-                                      }
-                                    });
-                                  }
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    pathImage = '';
+                                    File(pathImage).delete();
+                                  });
                                 },
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5),
-                                decoration: BoxDecoration(
-                                    color: Color(0xffBC65FF),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Text(context.l10n.addPhoto,
-                                    style: Theme.of(context)
+                                child: Container(
+                                  margin: EdgeInsets.all(7),
+                                  padding: EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).cardColor,
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Theme.of(context)
                                         .textTheme
                                         .titleSmall
-                                        ?.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                              ),
-                            )
-                          ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  pathImage = '';
-                                  File(pathImage).delete();
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(7),
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Theme.of(context).cardColor,
+                                        ?.color,
+                                  ),
                                 ),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 16,
+                              )
+                            ],
+                          ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(Configs.commonRadius),
+                    ),
+                    child: TextFormField(
+                      cursorColor: AppColors.accentDark,
+                      maxLines: 16,
+                      onChanged: (value) => setState(() {}),
+                      controller: _textContentController,
+                      decoration: InputDecoration(
+                        hintText: context.l10n.enterThecontentofyourstory,
+                        hintStyle:
+                            Theme.of(context).textTheme.titleSmall?.copyWith(
                                   color: Theme.of(context)
                                       .textTheme
                                       .titleSmall
-                                      ?.color,
+                                      ?.color
+                                      ?.withValues(alpha: .3),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(Configs.commonRadius),
-                  ),
-                  child: TextFormField(
-                    cursorColor: AppColors.accentDark,
-                    maxLines: 16,
-                    onChanged: (value) => setState(() {}),
-                    controller: _textContentController,
-                    decoration: InputDecoration(
-                      hintText: context.l10n.enterThecontentofyourstory,
-                      hintStyle:
-                          Theme.of(context).textTheme.titleSmall?.copyWith(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.color
-                                    ?.withValues(alpha: .3),
-                              ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(15),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(15),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  TextButton(
+                    onPressed: () => showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => ChangedChooseBottomsheet(
+                        title: context.l10n.pickaDate,
+                      ),
+                    ).then(
+                      (value) {
+                        if (value != null) {
+                          setState(() {
+                            dating = value;
+                          });
+                        }
+                      },
+                    ),
+                    style: TextButton.styleFrom(
+                      minimumSize:
+                          Size(double.infinity, Configs.commonHeightButton),
+                      backgroundColor: Theme.of(context).cardColor,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Configs.commonRadius),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          dating == null
+                              ? context.l10n.pickaDate
+                              : DateFormat('dd-MM-yyyy').format(dating!),
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down_sharp,
+                          color: AppColors.accentDark,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

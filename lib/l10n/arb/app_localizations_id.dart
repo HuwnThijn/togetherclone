@@ -281,4 +281,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get birthday => 'जन्मदिन';
+
+  @override
+  String get memoriesMoment => 'स्मृति क्षण';
+
+  @override
+  String get newMemory => 'नई याद';
+
+  @override
+  String get youDonthaveanymemoriesyet => 'आपके पास अभी तक कोई यादें नहीं हैं!';
+
+  @override
+  String get photoBackground => 'फ़ोटो की पृष्ठभूमि';
+
+  @override
+  String get upload => 'अपलोड करें';
 }

@@ -45,17 +45,20 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: AppColors.accentDark,
+        elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: AssetsClass.icons.arrowRight
-              .svg(width: 24, color: AppColors.accentDark),
+              .svg(width: 24, color: Colors.white),
         ),
         title: Text(
-          context.l10n.loveStory,
+          context.l10n.memoriesMoment,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.accentDark,
+                color: Colors.white,
               ),
         ),
         actions: [
@@ -69,7 +72,7 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
               },
             ),
             icon: AssetsClass.icons.rectangleHistoryCirclePlus
-                .svg(width: 24, color: AppColors.accentDark),
+                .svg(width: 24, color: Colors.white),
           ),
         ],
       ),
@@ -153,18 +156,18 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
   Widget _buildListEmpty() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 15,
+      spacing: 10,
       children: [
         Center(
           child: AssetsClass.images.imageListStoryEmpty.image(height: 146),
         ),
-        Text(context.l10n.youTwodonthavealovestory,
+        Text(context.l10n.youDonthaveanymemoriesyet,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: Theme.of(context)
                       .textTheme
                       .titleSmall
                       ?.color
-                      ?.withValues(alpha: .5),
+                      ?.withValues(alpha: .2),
                 )),
       ],
     );
