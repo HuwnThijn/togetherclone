@@ -275,4 +275,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get female => 'महिला';
+
+  @override
+  String get enterUsername => 'उपयोगकर्ता नाम दर्ज करें';
+
+  @override
+  String get birthday => 'जन्मदिन';
 }

@@ -85,5 +85,7 @@
   "frame": "Khung",
   "background": "Ảnh nền",
   "male": "Nam",
-  "female": "Nữ"
+  "female": "Nữ",
+  "enterUsername": "Nhập tên người dùng",
+  "birthday": "Ngày sinh"
 }

@@ -623,6 +623,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Female'**
   String get female;
+
+  /// No description provided for @enterUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Username'**
+  String get enterUsername;
+
+  /// No description provided for @birthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthday;
 }
 
 class _AppLocalizationsDelegate

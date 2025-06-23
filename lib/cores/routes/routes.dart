@@ -11,5 +11,6 @@ class Routes {
   static const wallpaperPage = 'WallpaperPage';
   static const framePage = 'FramePage';
   static const reviewPage = 'ReviewPage';
+  static const startDatingPage = 'StartDatingPage';
 
 }

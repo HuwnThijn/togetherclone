@@ -154,6 +154,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/edit.svg
   SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
 
+  /// File path: assets/icons/file.svg
+  SvgGenImage get file => const SvgGenImage('assets/icons/file.svg');
+
+  /// File path: assets/icons/file2.svg
+  SvgGenImage get file2 => const SvgGenImage('assets/icons/file2.svg');
+
   /// File path: assets/icons/frame.svg
   SvgGenImage get frame => const SvgGenImage('assets/icons/frame.svg');
 
@@ -212,6 +218,8 @@ class $AssetsIconsGen {
     circleXmark,
     contact,
     edit,
+    file,
+    file2,
     frame,
     gender,
     genderFemale,

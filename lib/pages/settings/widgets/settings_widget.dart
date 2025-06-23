@@ -1,33 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dynamic_icon_plus/flutter_dynamic_icon_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/enumlist.dart';
-import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/routes/routes.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
-import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
 import 'package:lovejourney/cores/ultils.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
 import 'package:lovejourney/pages/bottomsheets/changed_bod_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_choose_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_icon_app_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_language_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_option_bottomsheet.dart';
 import 'package:lovejourney/pages/bottomsheets/changed_shape_avatar_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_theme_bottomsheet.dart';
 import 'package:lovejourney/pages/bottomsheets/choose_option_camera_bottomsheet.dart';
-import 'package:lovejourney/pages/lock_app/lock_app_page.dart';
-import 'package:lovejourney/pages/popups/changed_date_popup.dart';
 import 'package:lovejourney/pages/popups/changed_name_popup.dart';
-import 'package:lovejourney/pages/settings/widgets/button_setting_widget.dart';
 import 'package:lovejourney/pages/settings/widgets/button_setting_widget2.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -125,30 +114,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   )
                 : null,
             onPressed: () {
-              showModalBottomSheet(
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) => ChangedDatePopup(
-                        title: 'Start date',
-                        initialDate: DateTime.fromMillisecondsSinceEpoch(
-                            loveData!.loveday ?? 0),
-                      )).then(
-                (value) {
-                  if (value != null && value is DateTime) {
-                    serviceLocator<SharePrefer>()
-                        .saveLoveDay(LoveDayModel(
-                            loveday: value.millisecondsSinceEpoch,
-                            gender: gender ?? ''))
-                        .then((_) async {
-                      getLoveData();
-                      loveData =
-                          await serviceLocator<SharePrefer>().getLoveday();
-                      gender = loveData?.gender;
-                      setState(() {});
-                    });
-                  }
-                },
-              );
+              Navigator.pushNamed(context, Routes.startDatingPage).then((value) {
+                if (value != null && value is DateTime) {
+                  loveData?.loveday = value.millisecondsSinceEpoch;
+                }
+              });
             },
           ),
           ButtonSettingWidget2(
@@ -158,16 +128,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               color: AppColors.accentDark,
             ),
             onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => ChangedOptionBottomsheet()).then(
-                (value) {
-                  if (value is int) {
-                    handleOption(value, true);
-                  }
-                },
-              );
+              Navigator.pushNamed(context, Routes.maleInfoPage);
             },
           ),
           ButtonSettingWidget2(
@@ -177,16 +138,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               color: AppColors.accentDark,
             ),
             onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => ChangedOptionBottomsheet()).then(
-                (value) {
-                  if (value is int) {
-                    handleOption(value, false);
-                  }
-                },
-              );
+              Navigator.pushNamed(context, Routes.femaleInfoPage);
             },
           ),
           ButtonSettingWidget2(

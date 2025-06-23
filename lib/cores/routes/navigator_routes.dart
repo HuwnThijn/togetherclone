@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/routes/routes.dart';
+import 'package:lovejourney/pages/dating/start_dating_page.dart';
 import 'package:lovejourney/pages/gender/changed_gender_page.dart';
 import 'package:lovejourney/pages/home_page.dart';
+import 'package:lovejourney/pages/user_info/female_info_page.dart';
+import 'package:lovejourney/pages/user_info/male_info_page.dart';
 import 'package:lovejourney/pages/wallpaper/wallpaper_page.dart';
 
 class NavigatorRoutes {
@@ -28,20 +31,20 @@ class NavigatorRoutes {
       //         builder: ((context) => page),
       //         settings: const RouteSettings(name: Routes.newAnniversaryPage));
       //   }
-      // case Routes.femaleInfoPage:
-      //   {
-      //     const page = FemaleInfoPage();
-      //     return CupertinoPageRoute(
-      //         builder: ((context) => page),
-      //         settings: const RouteSettings(name: Routes.femaleInfoPage));
-      //   }
-      // case Routes.maleInfoPage:
-      //   {
-      //     const page = MaleInfoPage();
-      //     return CupertinoPageRoute(
-      //         builder: ((context) => page),
-      //         settings: const RouteSettings(name: Routes.maleInfoPage));
-      //   }
+      case Routes.femaleInfoPage:
+        {
+          const page = FemaleInfoPage();
+          return CupertinoPageRoute(
+              builder: ((context) => page),
+              settings: const RouteSettings(name: Routes.femaleInfoPage));
+        }
+      case Routes.maleInfoPage:
+        {
+          const page = MaleInfoPage();
+          return CupertinoPageRoute(
+              builder: ((context) => page),
+              settings: const RouteSettings(name: Routes.maleInfoPage));
+        }
       case Routes.genderPage:
         {
           const page = ChangedGenderPage();
@@ -77,6 +80,14 @@ class NavigatorRoutes {
       //         builder: ((context) => page),
       //         settings: const RouteSettings(name: Routes.reviewPage));
       //   }
+      case Routes.startDatingPage:
+        {
+          const page = StartDatingPage();
+          return CupertinoPageRoute(
+              builder: ((context) => page),
+              settings: const RouteSettings(name: Routes.startDatingPage));
+          //return null; // Placeholder for future implementation
+        }
     }
     return null;
   }

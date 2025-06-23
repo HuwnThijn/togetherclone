@@ -1,20 +1,20 @@
 class MaleModel {
   late final String name;
   late final String avatar;
-  late final int brithday;
-  MaleModel({required this.avatar, required this.brithday, required this.name});
+  late final int birthday;
+  MaleModel({required this.avatar, required this.birthday, required this.name});
 
   MaleModel.formJson(Map<String, dynamic> json) {
     name = json['name'];
     avatar = json['avatar'];
-    brithday = json['brithday'];
+    birthday = json['birthday'];
   }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'avatar': avatar,
-      'brithday': brithday,
+      'birthday': birthday,
     };
   }
 }

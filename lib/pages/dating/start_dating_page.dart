@@ -1,50 +1,55 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
-import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
-import 'package:lovejourney/pages/gender/widgets/button_gender_widget.dart';
-import 'package:lovejourney/pages/home_page.dart';
+import 'package:lovejourney/pages/popups/changed_date_popup.dart';
+import 'package:lovejourney/pages/set_date/widgets/date_picker_input.dart';
 
-class ChangedGenderPage extends StatefulWidget {
-  const ChangedGenderPage({super.key});
+class StartDatingPage extends StatefulWidget {
+  const StartDatingPage({super.key});
 
   @override
-  State<ChangedGenderPage> createState() => _ChangedGenderPageState();
+  State<StartDatingPage> createState() => _StartDatingPageState();
 }
 
-class _ChangedGenderPageState extends State<ChangedGenderPage> {
-  String? gender;
+class _StartDatingPageState extends State<StartDatingPage> {
   LoveDayModel? loveData;
+  DateTime dating = DateTime.now();
   bool isLoading = true;
+
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _loadCurrentGender();
+    _loadLoveData();
   }
 
-  Future<void> _loadCurrentGender() async {
+  void _loadLoveData() async {
     try {
-      final loveDay = await serviceLocator<SharePrefer>().getLoveday();
+      loveData = await serviceLocator<SharePrefer>().getLoveday();
+      if (loveData != null) {
+        dating = DateTime.fromMillisecondsSinceEpoch(loveData!.loveday!);
+      } else {
+        dating = DateTime.now();
+      }
       setState(() {
-        loveData = loveDay;
-        gender = loveDay.gender.isNotEmpty ? loveDay.gender : null;
         isLoading = false;
       });
     } catch (e) {
       setState(() {
-        gender = null;
-        isLoading = false;
+        dating = DateTime.now();
       });
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void getLoveData() async {
+    loveData = await serviceLocator<SharePrefer>().getLoveday();
+    setState(() {});
   }
 
   @override
@@ -52,7 +57,15 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body: isLoading ? _buildLoadingWidget() : _buildBody(),
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return const Center(
+      child: CupertinoActivityIndicator(
+        radius: 20,
+      ),
     );
   }
 
@@ -68,7 +81,7 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
             height: 24,
           )),
       title: Text(
-        context.l10n.yourGender,
+        context.l10n.startDating,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -85,57 +98,43 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
       child: Column(
         spacing: 20,
         children: [
-          // Male option
-          ButtonGenderWidget(
-            icon: AssetsClass.icons.genderMale.svg(
-              width: 24,
-            ),
-            label: context.l10n.male,
-            value: "male",
-            color: Colors.black87,
-            selectedColor: AppColors.accentDark,
-            selected: gender == "male",
-            onTap: (value) {
-              setState(() {
-                gender = value;
-              });
-            },
+          DatePickerInput(
+            selectedDate: dating,
+            onTap: _showDatePickerPopup,
+            placeholder: 'DD/MM/YYYY',
           ),
-
-          // Female option
-          ButtonGenderWidget(
-            icon: AssetsClass.icons.genderFemale.svg(
-              width: 24,
-            ),
-            label: context.l10n.female,
-            value: "female",
-            color: Colors.black87,
-            selectedColor: AppColors.accentDark,
-            selected: gender == "female",
-            onTap: (value) {
-              setState(() {
-                gender = value;
-              });
-            },
-          ),
-
-          // Save button
           _buildSaveButton(),
-
-          const SizedBox(height: 40),
         ],
       ),
     );
   }
 
+  Future<void> _showDatePickerPopup() async {
+    final picked = await showDialog<DateTime>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => ChangedDatePopup(
+              initialDate: dating,
+              title: context.l10n.pickaDate,
+              maximumDate: DateTime.now(),
+            ));
+    if (picked != null) {
+      setState(() {
+        dating = picked;
+      });
+    }
+  }
+
   Widget _buildSaveButton() {
+    final bool hasChanged = loveData?.loveday != null
+        ? dating.millisecondsSinceEpoch != loveData!.loveday
+        : true;
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: gender != null ? _onSave : null,
+        onPressed: hasChanged ? _onSave : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              gender != null ? AppColors.accentDark : Colors.grey.shade300,
+          backgroundColor: hasChanged ? AppColors.accentDark : Colors.grey,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -145,7 +144,7 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
         child: Text(
           context.l10n.save,
           style: TextStyle(
-            color: gender != null ? Colors.white : Colors.grey,
+            color: dating != DateTime.now() ? Colors.white : Colors.grey,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -156,14 +155,16 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
 
   void _onSave() async {
     try {
+      // Giữ nguyên gender nếu có, chỉ update loveday
       final updatedLoveDay = LoveDayModel(
-        gender: gender ?? '',
-        loveday: loveData?.loveday,
+        gender: loveData?.gender ?? '',
+        loveday: dating.millisecondsSinceEpoch, // Convert DateTime sang int
       );
 
       await serviceLocator<SharePrefer>().saveLoveDay(updatedLoveDay);
-      // Return với gender đã chọn
-      Navigator.pop(context, gender);
+      if (mounted) {
+        Navigator.pop(context, dating);
+      }
     } catch (e) {}
   }
 }

@@ -85,5 +85,7 @@
   "frame": "Frame",
   "background": "Background",
   "male": "Male",
-  "female": "Female"
+  "female": "Female",
+  "enterUsername": "Enter Username",
+  "birthday": "Birthday"
 }

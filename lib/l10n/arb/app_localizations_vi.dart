@@ -275,4 +275,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get female => 'Nữ';
+
+  @override
+  String get enterUsername => 'Nhập tên người dùng';
+
+  @override
+  String get birthday => 'Ngày sinh';
 }

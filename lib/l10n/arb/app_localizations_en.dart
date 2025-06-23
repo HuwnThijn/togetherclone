@@ -274,4 +274,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get female => 'Female';
+
+  @override
+  String get enterUsername => 'Enter Username';
+
+  @override
+  String get birthday => 'Birthday';
 }

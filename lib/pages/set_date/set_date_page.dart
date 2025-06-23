@@ -4,6 +4,7 @@ import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/pages/gender/widgets/button_gender_widget.dart';
 import 'package:lovejourney/pages/home_page.dart';
 import 'package:lovejourney/pages/popups/changed_date_popup.dart';
+import 'package:lovejourney/pages/set_date/widgets/date_picker_input.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
@@ -130,44 +131,10 @@ class _SetDatePageState extends State<SetDatePage> {
                   //     ),
                   //   ),
                   // ),
-                  GestureDetector(
+                  DatePickerInput(
+                    selectedDate: dating,
                     onTap: _showDatePickerPopup,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                      ),
-                      child: Row(
-                        children: [
-                          AssetsClass.icons.calenderClock.svg(
-                            width: 24,
-                            height: 24,
-                            color: dating == null ? Colors.grey : Colors.black,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              dating == null
-                                  ? 'DD/MM/YYYY'
-                                  : "${dating.day.toString().padLeft(2, '0')}/${dating.month.toString().padLeft(2, '0')}/${dating.year}",
-                              style: TextStyle(
-                                color:
-                                    dating == null ? Colors.grey : Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                          AssetsClass.icons.arrowDown.svg(
-                            width: 8,
-                            height: 8,
-                            color: dating == null ? Colors.grey : Colors.black,
-                          ),
-                        ],
-                      ),
-                    ),
+                    placeholder: 'DD/MM/YYYY',
                   ),
                   SizedBox(
                     height: 32,

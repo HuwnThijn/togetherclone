@@ -10,6 +10,7 @@ import 'package:lovejourney/cores/store/share_prefer.dart';
 import 'package:lovejourney/cores/themes_app.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lovejourney/gen/assets.gen.dart';
+import 'package:lovejourney/l10n/l10n.dart';
 
 class WallpaperPage extends StatefulWidget {
   const WallpaperPage({super.key});
@@ -31,21 +32,43 @@ class _WallpaperPageState extends State<WallpaperPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
+      appBar: _buildAppBar(),
+      body: buildBody(),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      backgroundColor: AppColors.accentDark,
+      elevation: 0,
+      leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: AssetsClass.icons.arrowRight
-              .svg(width: 24, color: AppColors.accentDark),
-        ),
-        title: Text(
-          'Wallpaper',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.accentDark,
-              ),
+          icon: AssetsClass.icons.arrowRight.svg(
+            color: Colors.white,
+            width: 24,
+            height: 24,
+          )),
+      title: Text(
+        context.l10n.background,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
         ),
       ),
-      body: buildBody(),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: IconButton(
+              onPressed: () {},
+              icon: AssetsClass.icons.file2.svg(
+                color: Colors.white,
+                width: 24,
+                height: 24,
+              )),
+        )
+      ],
+      centerTitle: true,
     );
   }
 

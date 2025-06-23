@@ -85,5 +85,7 @@
   "frame": "框架",
   "background": "背景",
   "male": "男",
-  "female": "女"
+  "female": "女",
+  "enterUsername": "输入用户名",
+  "birthday": "生日"
 }

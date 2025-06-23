@@ -271,4 +271,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get female => '女';
+
+  @override
+  String get enterUsername => '输入用户名';
+
+  @override
+  String get birthday => '生日';
 }

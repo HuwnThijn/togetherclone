@@ -85,5 +85,7 @@
   "frame": "फ़्रेम",
   "background": "पृष्ठभूमि",
   "male": "पुरुष",
-  "female": "महिला"
+  "female": "महिला",
+  "enterUsername": "उपयोगकर्ता नाम दर्ज करें",
+  "birthday": "जन्मदिन"
 }
