@@ -719,6 +719,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'day left'**
   String get dayLeft;
+
+  /// No description provided for @beingTogether.
+  ///
+  /// In en, this message translates to:
+  /// **'Being Together'**
+  String get beingTogether;
 }
 
 class _AppLocalizationsDelegate

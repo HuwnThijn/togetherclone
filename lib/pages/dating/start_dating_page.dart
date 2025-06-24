@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
@@ -158,11 +159,16 @@ class _StartDatingPageState extends State<StartDatingPage> {
       // Giữ nguyên gender nếu có, chỉ update loveday
       final updatedLoveDay = LoveDayModel(
         gender: loveData?.gender ?? '',
-        loveday: dating.millisecondsSinceEpoch, // Convert DateTime sang int
+        loveday: dating.millisecondsSinceEpoch,
+        dobMen: loveData!.dobMen,
+        dobWoman: loveData!.dobWoman,
+        nameMen: loveData!.nameMen,
+        nameWoman: loveData!.nameWoman,
       );
 
       await serviceLocator<SharePrefer>().saveLoveDay(updatedLoveDay);
       if (mounted) {
+        serviceLocator<MessagingService>().send(channel: MessageChannel.lovedayChanged, parameter: true);
         Navigator.pop(context, dating);
       }
     } catch (e) {}

@@ -324,4 +324,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dayLeft => 'बचा हुआ दिन';
+
+  @override
+  String get beingTogether => 'साथ रहना';
 }

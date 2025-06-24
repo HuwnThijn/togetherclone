@@ -319,4 +319,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dayLeft => '天剩余';
+
+  @override
+  String get beingTogether => '在一起';
 }

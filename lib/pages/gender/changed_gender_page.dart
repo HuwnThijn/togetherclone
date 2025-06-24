@@ -159,6 +159,10 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
       final updatedLoveDay = LoveDayModel(
         gender: gender ?? '',
         loveday: loveData?.loveday,
+        dobMen: loveData!.dobMen,
+        dobWoman: loveData!.dobWoman,
+        nameMen: loveData!.nameMen,
+        nameWoman: loveData!.nameWoman,
       );
 
       await serviceLocator<SharePrefer>().saveLoveDay(updatedLoveDay);

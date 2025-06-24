@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lovejourney/cores/app_colors.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/models/male_model.dart';
 import 'package:lovejourney/cores/routes/routes.dart';
@@ -382,7 +383,10 @@ class _FemaleInfoPageState extends State<FemaleInfoPage> {
         loveday: loveData!.loveday,
       ));
       if (mounted) {
-        Navigator.pop(context, true);
+        serviceLocator<MessagingService>()
+            .send(channel: MessageChannel.userDataChanged, parameter: true);
+
+        Navigator.popUntil(context, ModalRoute.withName(Routes.homePage));
       }
     } catch (e) {}
   }

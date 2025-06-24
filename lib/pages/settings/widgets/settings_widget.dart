@@ -18,6 +18,7 @@ import 'package:lovejourney/pages/bottomsheets/changed_shape_avatar_bottomsheet.
 import 'package:lovejourney/pages/bottomsheets/choose_option_camera_bottomsheet.dart';
 import 'package:lovejourney/pages/popups/changed_name_popup.dart';
 import 'package:lovejourney/pages/settings/widgets/button_setting_widget2.dart';
+import 'package:lovejourney/pages/user_info/male_info_page.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({super.key});
@@ -114,7 +115,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   )
                 : null,
             onPressed: () {
-              Navigator.pushNamed(context, Routes.startDatingPage).then((value) {
+              Navigator.pushNamed(context, Routes.startDatingPage)
+                  .then((value) {
                 if (value != null && value is DateTime) {
                   loveData?.loveday = value.millisecondsSinceEpoch;
                 }
@@ -128,7 +130,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               color: AppColors.accentDark,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, Routes.maleInfoPage);
+              Navigator.pushNamed(
+                context,
+                Routes.maleInfoPage,
+              );
             },
           ),
           ButtonSettingWidget2(

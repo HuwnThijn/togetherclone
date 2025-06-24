@@ -53,4 +53,6 @@ class MessageChannel {
   static const homeRefreshData = 'homeRefreshData';
   static const themeChanged = 'themeChanged';
   static const startUserChanged = 'startUserChanged';
+  static const userDataChanged = 'userDataChanged';
+  static const lovedayChanged = 'lovedayChanged';
 }

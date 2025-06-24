@@ -22,96 +22,12 @@ class _CustomSidebarState extends State<CustomSidebar> {
     return Scaffold(backgroundColor: Colors.transparent, body: _buildBody());
   }
 
-  Widget _buildMenuItem({
-    required Widget icon,
-    required String title,
-    required Color iconColor,
-    VoidCallback? onTap,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: icon,
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-          color: Colors.grey,
-        ),
-        onTap: onTap ??
-            () {
-              // Handle navigation to specific setting
-              Navigator.pop(context);
-            },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSwitchMenuItem({
-    required IconData icon,
-    required String title,
-    required Color iconColor,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: iconColor,
-            size: 20,
-          ),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        trailing: Switch(
-          value: value,
-          onChanged: onChanged,
-          //activeColor: AppColors.accentDark,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    );
-  }
-
   Widget _buildBody() {
     return Stack(
       children: [
         // Background blur overlay
         GestureDetector(
-          onTap: () => Navigator.pop(context),
+          onTap: () => Navigator.pop(context, true),
           child: Container(
             color: Colors.black.withOpacity(0.3),
             width: double.infinity,
@@ -149,7 +65,7 @@ class _CustomSidebarState extends State<CustomSidebar> {
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pop(context, true),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(
@@ -177,8 +93,7 @@ class _CustomSidebarState extends State<CustomSidebar> {
                       spacing: 10,
                       children: [
                         SettingsWidget(),
-                        MoreSettingsWidget(),
-                        
+                        MoreSettingsWidget(),                       
                       ],
                     ),
                   )

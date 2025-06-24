@@ -323,4 +323,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dayLeft => 'day left';
+
+  @override
+  String get beingTogether => 'Being Together';
 }

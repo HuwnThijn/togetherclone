@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/pages/user_info/female_info_page.dart';
 import 'package:lovejourney/pages/user_info/male_info_page.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,7 +21,6 @@ import 'package:lovejourney/cores/widgets/custom_indot.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
 import 'package:lovejourney/pages/bottomsheets/changed_bod_bottomsheet.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_option_bottomsheet.dart';
 import 'package:lovejourney/pages/bottomsheets/changed_shape_avatar_bottomsheet.dart';
 import 'package:lovejourney/pages/bottomsheets/choose_option_camera_bottomsheet.dart';
 import 'package:lovejourney/pages/homeviews/animation_heart_widget.dart';
@@ -50,6 +50,15 @@ class _CountLoveViewState extends State<CountLoveView>
     super.initState();
     tabController = TabController(length: 2, vsync: this);
     getLoveData();
+    serviceLocator<MessagingService>().subscribe(this, channel: MessageChannel.lovedayChanged, action: (_) => getLoveData(),);
+    serviceLocator<MessagingService>().subscribe(this, channel: MessageChannel.userDataChanged, action: (_) => getLoveData());
+  }
+
+  @override
+  void dispose() {
+    serviceLocator<MessagingService>().unsubscribe(this, channel: MessageChannel.lovedayChanged);
+    serviceLocator<MessagingService>().unsubscribe(this, channel: MessageChannel.userDataChanged);
+    super.dispose();
   }
 
   void getLoveData() async {
@@ -59,25 +68,25 @@ class _CountLoveViewState extends State<CountLoveView>
     setState(() {});
   }
 
-  void _navigateToMaleInfoPage() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const MaleInfoPage()),
-    );
-    if (result == true) {
-      getLoveData();
-    }
-  }
+  // void _navigateToMaleInfoPage() async {
+  //   final result = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const MaleInfoPage()),
+  //   );
+  //   if (result == true) {
+  //     getLoveData();
+  //   }
+  // }
 
-  void _navigateToFemaleInfoPage() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FemaleInfoPage()),
-    );
-    if (result == true) {
-      getLoveData();
-    }
-  }
+  // void _navigateToFemaleInfoPage() async {
+  //   final result = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const FemaleInfoPage()),
+  //   );
+  //   if (result == true) {
+  //     getLoveData();
+  //   }
+  // }
 
   void handleOption(int index, bool isMen) {
     switch (index) {
@@ -238,7 +247,7 @@ class _CountLoveViewState extends State<CountLoveView>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                context.l10n.inlove,
+                                context.l10n.beingTogether,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall
@@ -248,18 +257,17 @@ class _CountLoveViewState extends State<CountLoveView>
                               ),
                               Builder(builder: (context) {
                                 final total =
-                                    DateTime.now().millisecondsSinceEpoch -
-                                        loveData.loveday!;
+                                    DateTime.now().difference(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        loveData.loveday ?? 0));
                                 return Text(
-                                  DateTime.fromMillisecondsSinceEpoch(total)
-                                      .day
-                                      .toString(),
+                                  '${total.inDays}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayLarge
                                       ?.copyWith(
-                                        color: const Color(0xffFB8500),
-                                        fontWeight: FontWeight.w500,
+                                        color: const Color.fromRGBO(255, 175, 204, 1),
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 80,
                                       ),
                                 );
@@ -317,7 +325,7 @@ class _CountLoveViewState extends State<CountLoveView>
                                             '${((total.inDays % 365) % 30) ~/ 7}'),
                                     buildItemCalculate(
                                         title: context.l10n.days,
-                                        value: '${total.inDays}'),
+                                        value: '${((total.inDays % 365) % 30) % 7}'),
                                   ],
                                 );
                               }),
@@ -391,11 +399,12 @@ class _CountLoveViewState extends State<CountLoveView>
                 //   )
                 // ]),
                 child: Row(
+                  spacing: 20,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
                       onTap: () {
-                        _navigateToMaleInfoPage();
+                        //_navigateToMaleInfoPage();
                         // showModalBottomSheet(
                         //     context: context,
                         //     backgroundColor: Colors.transparent,
@@ -409,7 +418,7 @@ class _CountLoveViewState extends State<CountLoveView>
                         // );
                       },
                       child: Column(
-                        spacing: 10,
+                        spacing: 5,
                         children: [
                           Stack(
                             children: [
@@ -452,20 +461,20 @@ class _CountLoveViewState extends State<CountLoveView>
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87),
                           ),
                           Text(
                             loveData.dobMen.isNotEmpty
-                                ? DateFormat('dd-MM-yyyy')
+                                ? DateFormat('dd/MM/yyyy')
                                     .format(DateTime.parse(loveData.dobMen))
-                                : '??-??-????',
+                                : 'DD/MM/YYYY',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white),
+                                    color: Colors.black54),
                           )
                         ],
                       ),
@@ -478,7 +487,7 @@ class _CountLoveViewState extends State<CountLoveView>
                     // ),
                     InkWell(
                       onTap: () {
-                        _navigateToFemaleInfoPage();
+                        //_navigateToFemaleInfoPage();
                         // showModalBottomSheet(
                         //     context: context,
                         //     backgroundColor: Colors.transparent,
@@ -492,7 +501,7 @@ class _CountLoveViewState extends State<CountLoveView>
                         // );
                       },
                       child: Column(
-                        spacing: 10,
+                        spacing: 5,
                         children: [
                           Stack(
                             children: [
@@ -537,20 +546,20 @@ class _CountLoveViewState extends State<CountLoveView>
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87),
                           ),
                           Text(
                             loveData.dobWoman.isNotEmpty
-                                ? DateFormat('dd-MM-yyyy')
+                                ? DateFormat('dd/MM/yyyy')
                                     .format(DateTime.parse(loveData.dobWoman))
-                                : '??-??-????',
+                                : 'DD/MM/YYYY',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white),
+                                    color: Colors.black54),
                           )
                         ],
                       ),

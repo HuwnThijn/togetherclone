@@ -14,6 +14,7 @@ import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
 import 'package:lovejourney/pages/bottomsheets/comfirm_pass_bottomsheet.dart';
 import 'package:lovejourney/pages/homeviews/countlove_view.dart';
+import 'package:lovejourney/pages/homeviews/countlove_view2.dart';
 import 'package:lovejourney/pages/love_story/love_story_page.dart';
 import 'package:lovejourney/pages/settings/settings_page.dart';
 import 'package:lovejourney/pages/settings/sidebar_setting.dart';
@@ -91,25 +92,26 @@ class _HomePageState extends State<HomePage> {
         //   leading: IconButton(
         //       onPressed: () =>
         //           Navigator.push(context, createRouter(LoveStoryPage())),
-        //       icon: AssetsClass.icons.calendarHeart.svg(
-        //           width: 24,
+        //       icon: AssetsClass.images.imageBestSeller.image(
+        //           width: 40,
         //           color: Shared.instance.isMainColor
         //               ? AppColors.accentDark
         //               : Colors.white)),
-        //   title: Text(
-        //     Shared.instance.packageInfo.appName,
-        //     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        //         color: Shared.instance.isMainColor
-        //             ? AppColors.accentDark
-        //             : Colors.white,
-        //         fontWeight: FontWeight.bold),
-        //   ),
         //   actions: [
+        //     IconButton(
+        //       onPressed: () =>
+        //           Navigator.push(context, createRouter(LoveStoryPage())),
+        //       icon: AssetsClass.icons.calendarHeart.svg(
+        //           width: 40,
+        //           color: Shared.instance.isMainColor
+        //               ? AppColors.accentDark
+        //               : Colors.white),
+        //     ),
         //     IconButton(
         //         onPressed: () =>
         //             Navigator.push(context, createRouter(SettingsPage())),
         //         icon: AssetsClass.icons.settings.svg(
-        //             width: 24,
+        //             width: 40,
         //             color: Shared.instance.isMainColor
         //                 ? AppColors.accentDark
         //                 : Colors.white)),
@@ -135,74 +137,61 @@ class _HomePageState extends State<HomePage> {
                 right: 10,
                 bottom: 10),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                    'Memory Box',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Shared.instance.isMainColor
-                              ? AppColors.accentDark
-                              : Colors.white,
-                        ),
-                  ),
-                ),
                 IconButton(
                     onPressed: () {
                       Fluttertoast.showToast(
                           msg: context.l10n.functionunderdevelopment);
                     },
-                    icon: AssetsClass.images.imageBestSeller.image(width: 24)),
-                IconButton(
-                    onPressed: () =>
-                        Navigator.push(context, createRouter(LoveStoryPage())),
-                    icon: AssetsClass.icons.calendarHeart.svg(
-                        width: 24,
+                    icon:
+                        AssetsClass.images.imageBestSeller.image(width: 40)),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () => Navigator.push(
+                            context, createRouter(LoveStoryPage())),
+                        icon: AssetsClass.icons.calendarHeart.svg(
+                            width: 40,
+                            color: Shared.instance.isMainColor
+                                ? AppColors.accentDark
+                                : Colors.white)),
+                    IconButton(
+                      icon: AssetsClass.icons.settings.svg(
+                        width: 40,
                         color: Shared.instance.isMainColor
                             ? AppColors.accentDark
-                            : Colors.white)),
-                // IconButton(
-                //   onPressed: () =>
-                //       Navigator.push(context, createRouter(SettingsPage())),
-                //   icon: AssetsClass.icons.settings.svg(
-                //       width: 24,
-                //       color: Shared.instance.isMainColor
-                //           ? AppColors.accentDark
-                //           : Colors.white),
-                // ),
-                // Trong màn hình chính, thêm vào AppBar hoặc FloatingActionButton
-                IconButton(
-                  icon: AssetsClass.icons.settings.svg(
-                    width: 30,
-                    color: Shared.instance.isMainColor
-                        ? AppColors.accentDark
-                        : Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const CustomSidebar(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          var tween = Tween(begin: begin, end: end).chain(
-                            CurveTween(curve: curve),
-                          );
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 300),
-                        opaque: false,
+                            : Colors.white,
                       ),
-                    );
-                  },
-                )
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const CustomSidebar(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+                              var tween = Tween(begin: begin, end: end).chain(
+                                CurveTween(curve: curve),
+                              );
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                            transitionDuration:
+                                const Duration(milliseconds: 300),
+                            opaque: false,
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
               ],
             ),
           ),
