@@ -92,5 +92,14 @@
   "newMemory": "New Memory",
   "youDonthaveanymemoriesyet": "You don't have any memories yet!",
   "photoBackground": "Photo Background",
-  "upload": "Upload"
+  "upload": "Upload",
+  "memoryName": "Memory Name",
+  "enterName": "Enter Name",
+  "create": "Create",
+  "memoryDay": "Memory Day",
+  "editMemory": "Edit Memory",
+  "infomationMemory": "Information Memory",
+  "doYouWantToDeleteThisMemory": "Do you want to delete this memory?",
+  "daysLeft": "days left",
+  "dayLeft": "day left"
 }

@@ -28,6 +28,7 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
   MaleModel? maleData;
   LoveDayModel? loveData;
   bool isLoading = true;
+  String frame = '';
 
   @override
   void initState() {
@@ -63,11 +64,10 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
   }
 
   Future<void> _loadLoveDataAsync() async {
-    try {
-      loveData = await serviceLocator<SharePrefer>().getLoveday();
-    } catch (e) {
-      print('Error loading love data: $e');
-    }
+    loveData = await serviceLocator<SharePrefer>().getLoveday();
+    frame = serviceLocator<SharePrefer>().getFrameUser();
+    isLoading = false;
+    setState(() {});
   }
 
   Future<void> _loadMaleDataAsync() async {
@@ -216,9 +216,8 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
   }
 
   void _showImagePicker() async {
-    showModalBottomSheet(
+    showDialog(
         context: context,
-        backgroundColor: Colors.transparent,
         builder: (context) => ChooseOptionCameraBottomsheet()).then(
       (value) {
         if (value is ImageSource) {
@@ -378,7 +377,9 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
         imageMen: loveData!.imageMen,
         gender: loveData!.gender,
         loveday: loveData!.loveday,
-      ));
+      )).then((value){
+        _loadLoveDataAsync();
+      });
       if (mounted) {
         Navigator.pop(context, true);
       }

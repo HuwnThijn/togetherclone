@@ -218,9 +218,8 @@ class _FemaleInfoPageState extends State<FemaleInfoPage> {
   }
 
   void _showImagePicker() async {
-    showModalBottomSheet(
+    showDialog(
         context: context,
-        backgroundColor: Colors.transparent,
         builder: (context) => ChooseOptionCameraBottomsheet()).then(
       (value) {
         if (value is ImageSource) {

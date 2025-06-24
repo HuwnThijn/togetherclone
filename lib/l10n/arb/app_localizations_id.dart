@@ -296,4 +296,32 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get upload => 'अपलोड करें';
+
+  @override
+  String get memoryName => 'स्मृति का नाम';
+
+  @override
+  String get enterName => 'नाम दर्ज करें';
+
+  @override
+  String get create => 'बनाएँ';
+
+  @override
+  String get memoryDay => 'स्मृति दिवस';
+
+  @override
+  String get editMemory => 'याद संपादित करें';
+
+  @override
+  String get infomationMemory => 'याद की जानकारी';
+
+  @override
+  String get doYouWantToDeleteThisMemory =>
+      'क्या आप इस याद को हटाना चाहते हैं?';
+
+  @override
+  String get daysLeft => 'बचे हुए दिन';
+
+  @override
+  String get dayLeft => 'बचा हुआ दिन';
 }

@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                   child: Text(
-                    'LoveJourney',
+                    'Memory Box',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Shared.instance.isMainColor

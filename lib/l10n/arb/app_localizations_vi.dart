@@ -296,4 +296,32 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get upload => 'Tải lên';
+
+  @override
+  String get memoryName => 'Tên kỷ niệm';
+
+  @override
+  String get enterName => 'Nhập tên';
+
+  @override
+  String get create => 'Tạo';
+
+  @override
+  String get memoryDay => 'Ngày kỷ niệm';
+
+  @override
+  String get editMemory => 'Chỉnh sửa kỷ niệm';
+
+  @override
+  String get infomationMemory => 'Thông tin kỷ niệm';
+
+  @override
+  String get doYouWantToDeleteThisMemory =>
+      'Bạn có muốn xóa kỷ niệm này không?';
+
+  @override
+  String get daysLeft => 'ngày còn lại';
+
+  @override
+  String get dayLeft => 'ngày còn lại';
 }

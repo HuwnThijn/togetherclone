@@ -665,6 +665,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upload'**
   String get upload;
+
+  /// No description provided for @memoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory Name'**
+  String get memoryName;
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Name'**
+  String get enterName;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @memoryDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory Day'**
+  String get memoryDay;
+
+  /// No description provided for @editMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Memory'**
+  String get editMemory;
+
+  /// No description provided for @infomationMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Information Memory'**
+  String get infomationMemory;
+
+  /// No description provided for @doYouWantToDeleteThisMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to delete this memory?'**
+  String get doYouWantToDeleteThisMemory;
+
+  /// No description provided for @daysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'days left'**
+  String get daysLeft;
+
+  /// No description provided for @dayLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'day left'**
+  String get dayLeft;
 }
 
 class _AppLocalizationsDelegate

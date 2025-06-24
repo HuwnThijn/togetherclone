@@ -17,44 +17,47 @@ class _ChooseOptionCameraBottomsheetState
     extends State<ChooseOptionCameraBottomsheet> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          padding: EdgeInsets.only(top: 10),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+    return Dialog(
+      alignment: Alignment.center,
+      
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildOption(
+                    AssetsClass.icons.camera.svg(
+                        width: 24,
+                        color: Shared.instance.isMainColor
+                            ? AppColors.accentDark
+                            : null),
+                    title: context.l10n.camera,
+                    onTap: () => Navigator.pop(context, ImageSource.camera)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 43),
+                  child: Divider(height: 1),
+                ),
+                _buildOption(
+                    AssetsClass.icons.picture.svg(
+                        width: 24,
+                        color: Shared.instance.isMainColor
+                            ? AppColors.accentDark
+                            : null),
+                    title: context.l10n.gallery,
+                    onTap: () => Navigator.pop(context, ImageSource.gallery)),
+              ],
             ),
           ),
-          child: Column(
-            children: [
-              _buildOption(
-                  AssetsClass.icons.camera.svg(
-                      width: 24,
-                      color: Shared.instance.isMainColor
-                          ? AppColors.accentDark
-                          : null),
-                  title: context.l10n.camera,
-                  onTap: () => Navigator.pop(context, ImageSource.camera)),
-              Padding(
-                padding: const EdgeInsets.only(left: 43),
-                child: Divider(height: 1),
-              ),
-              _buildOption(
-                  AssetsClass.icons.picture.svg(
-                      width: 24,
-                      color: Shared.instance.isMainColor
-                          ? AppColors.accentDark
-                          : null),
-                  title: context.l10n.gallery,
-                  onTap: () => Navigator.pop(context, ImageSource.gallery)),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

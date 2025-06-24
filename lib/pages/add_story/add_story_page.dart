@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lovejourney/pages/popups/changed_date_popup.dart';
+import 'package:lovejourney/pages/set_date/widgets/date_picker_input.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
@@ -12,7 +14,6 @@ import 'package:lovejourney/cores/store/share_prefer.dart';
 import 'package:lovejourney/cores/ultils.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
-import 'package:lovejourney/pages/bottomsheets/changed_choose_bottomsheet.dart';
 import 'package:lovejourney/pages/bottomsheets/choose_option_camera_bottomsheet.dart';
 
 class AddStoryPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
   bool get valid =>
       _textContentController.text.isNotEmpty &&
-      _textContentController.text.length > 10;
+      _textContentController.text.length > 5;
 
   late DateTime? dating;
 
@@ -67,7 +68,9 @@ class _AddStoryPageState extends State<AddStoryPage> {
               AssetsClass.icons.arrowRight.svg(width: 24, color: Colors.white),
         ),
         title: Text(
-          widget.item != null ? context.l10n.editStory : context.l10n.newMemory,
+          widget.item != null
+              ? context.l10n.editMemory
+              : context.l10n.newMemory,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -79,252 +82,303 @@ class _AddStoryPageState extends State<AddStoryPage> {
   }
 
   Widget _buildBody() {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 10,
-                children: [
-                  Text(
-                    '${context.l10n.username.toUpperCase()}: ',
-                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 12),
-                    height: 170,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(Configs.commonRadius),
-                      image: pathImage.isNotEmpty
-                          ? DecorationImage(
-                              image: FileImage(File(pathImage)),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 10,
+                  children: [
+                    Text(
+                      '${context.l10n.photoBackground.toUpperCase()}: ',
+                      style:
+                          TextStyle(color: Colors.grey.shade500, fontSize: 10),
                     ),
-                    child: pathImage.isEmpty
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 15,
-                            children: [
-                              AssetsClass.icons.picture.svg(
-                                  width: 44,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor),
-                              InkWell(
-                                onTap: () => showModalBottomSheet(
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    builder: (context) =>
-                                        ChooseOptionCameraBottomsheet()).then(
-                                  (value) {
-                                    if (value is ImageSource) {
-                                      serviceLocator<ImagePicker>()
-                                          .pickImage(source: value)
-                                          .then((value) {
-                                        if (value != null) {
-                                          setState(() {
-                                            pathImage = value.path;
-                                          });
-                                        }
-                                      });
-                                    }
-                                  },
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 5),
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffBC65FF),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      AssetsClass.icons.file2.svg(
-                                          width: 16,
-                                          color: Colors.white),
-                                      SizedBox(width: 8),
-                                      Text(context.l10n.upload,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall
-                                              ?.copyWith(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold)),
-                                    ],
-                                  ),
-                                ),
+                    Container(
+                      padding: EdgeInsets.only(top: 12),
+                      height: 170,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius:
+                            BorderRadius.circular(Configs.commonRadius),
+                        image: pathImage.isNotEmpty
+                            ? DecorationImage(
+                                image: FileImage(File(pathImage)),
+                                fit: BoxFit.cover,
                               )
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    pathImage = '';
-                                    File(pathImage).delete();
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.all(7),
-                                  padding: EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).cardColor,
+                            : null,
+                      ),
+                      child: pathImage.isEmpty
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 15,
+                              children: [
+                                AssetsClass.icons.picture.svg(
+                                    width: 44,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                                InkWell(
+                                  onTap: () => showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          ChooseOptionCameraBottomsheet()).then(
+                                    (value) {
+                                      if (value is ImageSource) {
+                                        serviceLocator<ImagePicker>()
+                                            .pickImage(source: value)
+                                            .then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              pathImage = value.path;
+                                            });
+                                          }
+                                        });
+                                      }
+                                    },
                                   ),
-                                  child: Icon(
-                                    Icons.close,
-                                    size: 16,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        AssetsClass.icons.file2.svg(
+                                            width: 16, color: Colors.white),
+                                        SizedBox(width: 8),
+                                        Text(context.l10n.upload,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (pathImage.isNotEmpty) {
+                                        try {
+                                          File(pathImage).delete();
+                                        } catch (e) {}
+                                      }
+                                      pathImage = '';
+                                    });
+                                  },
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.only(right: 10, bottom: 15),
+                                    //padding: EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      //color: Theme.of(context).cardColor,
+                                    ),
+                                    child: AssetsClass.icons.circleXmark.svg(
+                                      width: 24,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '${context.l10n.memoryName.toUpperCase()}: ',
+                      style:
+                          TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius:
+                            BorderRadius.circular(Configs.commonRadius),
+                      ),
+                      child: TextFormField(
+                        cursorColor: AppColors.accentDark,
+                        onChanged: (value) => setState(() {}),
+                        controller: _textContentController,
+                        decoration: InputDecoration(
+                          hintText: context.l10n.enterName,
+                          hintStyle:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
                                     color: Theme.of(context)
                                         .textTheme
                                         .titleSmall
-                                        ?.color,
+                                        ?.color
+                                        ?.withValues(alpha: .2),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(Configs.commonRadius),
-                    ),
-                    child: TextFormField(
-                      cursorColor: AppColors.accentDark,
-                      maxLines: 16,
-                      onChanged: (value) => setState(() {}),
-                      controller: _textContentController,
-                      decoration: InputDecoration(
-                        hintText: context.l10n.enterThecontentofyourstory,
-                        hintStyle:
-                            Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.color
-                                      ?.withValues(alpha: .3),
-                                ),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(15),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(15),
+                        ),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () => showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => ChangedChooseBottomsheet(
-                        title: context.l10n.pickaDate,
-                      ),
-                    ).then(
-                      (value) {
-                        if (value != null) {
-                          setState(() {
-                            dating = value;
-                          });
+                    Text(
+                      '${context.l10n.memoryDay.toUpperCase()}: ',
+                      style:
+                          TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                    ),
+                    DatePickerInput(
+                      selectedDate: dating,
+                      onTap: _showDatePickerPopup,
+                      placeholder: 'DD/MM/YYYY',
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        if (valid) {
+                          if (widget.item != null) {
+                            final newStory = widget.item!.copyWith(
+                              description: _textContentController.text,
+                              image: pathImage.isNotEmpty
+                                  ? await copyImageToCache(
+                                      File(pathImage).readAsBytesSync(),
+                                      name: DateTime.now()
+                                          .millisecondsSinceEpoch
+                                          .toString())
+                                  : '',
+                              date: dating != null ? dating.toString() : '',
+                            );
+                            serviceLocator<SharePrefer>()
+                                .updateLoveStory(newStory)
+                                .then(
+                              (value) {
+                                Navigator.pop(context, newStory);
+                              },
+                            );
+                          } else {
+                            serviceLocator<SharePrefer>()
+                                .saveLoveStory(
+                              LoveStoryModel(
+                                  id: getRandomString(),
+                                  description: _textContentController.text,
+                                  image: pathImage.isNotEmpty
+                                      ? await copyImageToCache(
+                                          File(pathImage).readAsBytesSync(),
+                                          name: DateTime.now()
+                                              .millisecondsSinceEpoch
+                                              .toString())
+                                      : '',
+                                  date:
+                                      dating != null ? dating.toString() : ''),
+                            )
+                                .then(
+                              (value) {
+                                Navigator.pop(context, true);
+                              },
+                            );
+                          }
                         }
                       },
-                    ),
-                    style: TextButton.styleFrom(
-                      minimumSize:
-                          Size(double.infinity, Configs.commonHeightButton),
-                      backgroundColor: Theme.of(context).cardColor,
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Configs.commonRadius),
+                      style: TextButton.styleFrom(
+                        minimumSize:
+                            Size(Device.width, Configs.commonHeightButton),
+                        backgroundColor: valid
+                            ? AppColors.accentDark
+                            : AppColors.accentDark.withValues(alpha: .3),
+                      ),
+                      child: Text(
+                        widget.item != null
+                            ? context.l10n.save
+                            : context.l10n.create,
+                        style: TextStyle(
+                          color: dating != DateTime.now()
+                              ? Colors.white
+                              : Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          dating == null
-                              ? context.l10n.pickaDate
-                              : DateFormat('dd-MM-yyyy').format(dating!),
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w400,
-                              ),
-                        ),
-                        Icon(
-                          Icons.arrow_drop_down_sharp,
-                          color: AppColors.accentDark,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                    // TextButton(
+                    //   onPressed: () => showModalBottomSheet(
+                    //     context: context,
+                    //     backgroundColor: Colors.transparent,
+                    //     builder: (context) => ChangedChooseBottomsheet(
+                    //       title: context.l10n.pickaDate,
+                    //     ),
+                    //   ).then(
+                    //     (value) {
+                    //       if (value != null) {
+                    //         setState(() {
+                    //           dating = value;
+                    //         });
+                    //       }
+                    //     },
+                    //   ),
+                    //   style: TextButton.styleFrom(
+                    //     minimumSize:
+                    //         Size(double.infinity, Configs.commonHeightButton),
+                    //     backgroundColor: Theme.of(context).cardColor,
+                    //     padding: EdgeInsets.symmetric(horizontal: 15),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius:
+                    //           BorderRadius.circular(Configs.commonRadius),
+                    //     ),
+                    //   ),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       Text(
+                    //         dating == null
+                    //             ? context.l10n.pickaDate
+                    //             : DateFormat('dd-MM-yyyy').format(dating!),
+                    //         style:
+                    //             Theme.of(context).textTheme.titleSmall?.copyWith(
+                    //                   fontWeight: FontWeight.w400,
+                    //                 ),
+                    //       ),
+                    //       Icon(
+                    //         Icons.arrow_drop_down_sharp,
+                    //         color: AppColors.accentDark,
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        TextButton(
-          onPressed: () async {
-            if (valid) {
-              if (widget.item != null) {
-                final newStory = widget.item!.copyWith(
-                  description: _textContentController.text,
-                  image: pathImage.isNotEmpty
-                      ? await copyImageToCache(
-                          File(pathImage).readAsBytesSync(),
-                          name:
-                              DateTime.now().millisecondsSinceEpoch.toString())
-                      : '',
-                  date: dating != null ? dating.toString() : '',
-                );
-                serviceLocator<SharePrefer>().updateLoveStory(newStory).then(
-                  (value) {
-                    Navigator.pop(context, newStory);
-                  },
-                );
-              } else {
-                serviceLocator<SharePrefer>()
-                    .saveLoveStory(
-                  LoveStoryModel(
-                      id: getRandomString(),
-                      description: _textContentController.text,
-                      image: pathImage.isNotEmpty
-                          ? await copyImageToCache(
-                              File(pathImage).readAsBytesSync(),
-                              name: DateTime.now()
-                                  .millisecondsSinceEpoch
-                                  .toString())
-                          : '',
-                      date: dating != null ? dating.toString() : ''),
-                )
-                    .then(
-                  (value) {
-                    Navigator.pop(context, true);
-                  },
-                );
-              }
-            }
-          },
-          style: TextButton.styleFrom(
-            minimumSize: Size(Device.width - 30, Configs.commonHeightButton),
-            backgroundColor: valid
-                ? AppColors.accentDark
-                : AppColors.accentDark.withValues(alpha: .3),
-          ),
-          child: Text(
-              widget.item != null ? context.l10n.update : context.l10n.save,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Colors.white)),
-        ),
-        SizedBox(
-          height: 20,
-        )
-      ],
+          SizedBox(
+            height: 20,
+          )
+        ],
+      ),
     );
+  }
+
+  Future<void> _showDatePickerPopup() async {
+    final picked = await showDialog<DateTime>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => ChangedDatePopup(
+              initialDate: DateTime.now(),
+              title: context.l10n.pickaDate,
+              maximumDate: DateTime.now(),
+            ));
+    if (picked != null) {
+      setState(() {
+        dating = picked;
+      });
+    }
   }
 }

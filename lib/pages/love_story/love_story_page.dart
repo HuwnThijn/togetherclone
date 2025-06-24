@@ -12,6 +12,7 @@ import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
 import 'package:lovejourney/pages/add_story/add_story_page.dart';
 import 'package:lovejourney/pages/detail_story/detail_story_page.dart';
+import 'package:lovejourney/pages/love_story/widgets/memory_card.dart';
 
 class LoveStoryPage extends StatefulWidget {
   const LoveStoryPage({super.key});
@@ -92,7 +93,7 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
     return ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 15),
         itemBuilder: (context, index) => _buildItem(list[index]),
-        separatorBuilder: (context, index) => SizedBox(height: 10),
+        separatorBuilder: (context, index) => SizedBox(),
         itemCount: list.length);
   }
 
@@ -110,44 +111,51 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
           }
         },
       ),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(Configs.commonRadius),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 5,
-          children: [
-            Row(
-              spacing: 10,
-              children: [
-                AssetsClass.icons.calendarHeart
-                    .svg(width: 24, color: AppColors.accentDark),
-                Text(
-                  DateFormat('dd-MM-yyyy').format(
-                    DateTime.parse(item.date),
-                  ),
-                  style: Theme.of(context).textTheme.titleSmall,
-                )
-              ],
-            ),
-            Text(
-              item.description,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            if (item.image.isNotEmpty)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(Configs.commonRadius),
-                child: Image.file(
-                  File(item.image),
-                  width: double.infinity,
-                  height: 160,
-                  fit: BoxFit.cover,
-                ),
-              ),
-          ],
+      // child: Container(
+      //   padding: EdgeInsets.all(10),
+      //   decoration: BoxDecoration(
+      //     color: Theme.of(context).cardColor,
+      //     borderRadius: BorderRadius.circular(Configs.commonRadius),
+      //   ),
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     spacing: 5,
+      //     children: [
+      //       Row(
+      //         spacing: 10,
+      //         children: [
+      //           AssetsClass.icons.calendarHeart
+      //               .svg(width: 24, color: AppColors.accentDark),
+      //           Text(
+      //             DateFormat('dd-MM-yyyy').format(
+      //               DateTime.parse(item.date),
+      //             ),
+      //             style: Theme.of(context).textTheme.titleSmall,
+      //           )
+      //         ],
+      //       ),
+      //       Text(
+      //         item.description,
+      //         style: Theme.of(context).textTheme.titleSmall,
+      //       ),
+      //       if (item.image.isNotEmpty)
+      //         ClipRRect(
+      //           borderRadius: BorderRadius.circular(Configs.commonRadius),
+      //           child: Image.file(
+      //             File(item.image),
+      //             width: double.infinity,
+      //             height: 160,
+      //             fit: BoxFit.cover,
+      //           ),
+      //         ),
+      //     ],
+      //   ),
+      // ),
+      child: Padding(padding: const EdgeInsets.symmetric(vertical: 10),
+        child: MemoryCard(
+          title: item.description,
+          date: DateTime.parse(item.date),
+          imagePath: item.image,
         ),
       ),
     );

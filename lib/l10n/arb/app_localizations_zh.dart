@@ -292,4 +292,31 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get upload => '上传';
+
+  @override
+  String get memoryName => '回忆名称';
+
+  @override
+  String get enterName => '输入名称';
+
+  @override
+  String get create => '创建';
+
+  @override
+  String get memoryDay => '纪念日';
+
+  @override
+  String get editMemory => '编辑回忆';
+
+  @override
+  String get infomationMemory => '回忆信息';
+
+  @override
+  String get doYouWantToDeleteThisMemory => '您想删除这个回忆吗？';
+
+  @override
+  String get daysLeft => '天剩余';
+
+  @override
+  String get dayLeft => '天剩余';
 }

@@ -92,5 +92,14 @@
   "newMemory": "新回忆",
   "youDonthaveanymemoriesyet": "你还没有任何回忆！",
   "photoBackground": "照片背景",
-  "upload": "上传"
+  "upload": "上传",
+  "memoryName": "回忆名称",
+  "enterName": "输入名称",
+  "create": "创建",
+  "memoryDay": "纪念日",
+  "editMemory": "编辑回忆",
+  "infomationMemory": "回忆信息",
+  "doYouWantToDeleteThisMemory": "您想删除这个回忆吗？",
+  "daysLeft": "天剩余",
+  "dayLeft": "天剩余"
 }

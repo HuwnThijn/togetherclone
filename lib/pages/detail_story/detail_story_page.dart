@@ -36,16 +36,18 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.accentDark,
+        elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: AssetsClass.icons.arrowRight
-              .svg(width: 24, color: AppColors.accentDark),
+          icon:
+              AssetsClass.icons.arrowRight.svg(width: 24, color: Colors.white),
         ),
         title: Text(
-          context.l10n.detailStory,
+          context.l10n.infomationMemory,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.accentDark,
+                color: Colors.white,
               ),
         ),
         actions: [
@@ -62,8 +64,7 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                 }
               },
             ),
-            icon: AssetsClass.icons.edit
-                .svg(width: 24, color: AppColors.accentDark),
+            icon: AssetsClass.icons.edit.svg(width: 24, color: Colors.white),
           ),
         ],
       ),
@@ -72,88 +73,126 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
   }
 
   Widget _buildBody() {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
-              children: [
-                if (item.image.isNotEmpty)
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  Text(
+                    '${context.l10n.photoBackground.toUpperCase()}: ',
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                  ),
+                  if (item.image.isNotEmpty)
+                    Container(
+                      height: 170,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius:
+                            BorderRadius.circular(Configs.commonRadius),
+                        image: DecorationImage(
+                          image: FileImage(File(widget.item.image)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  Text(
+                    '${context.l10n.memoryName.toUpperCase()}: ',
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                  ),
                   Container(
-                    height: 170,
+                    padding: EdgeInsets.all(10),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(Configs.commonRadius),
-                      image: DecorationImage(
-                        image: FileImage(File(widget.item.image)),
-                        fit: BoxFit.cover,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Text(
+                        item.description,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
+                            ),
                       ),
                     ),
                   ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(Configs.commonRadius),
+                  Text(
+                    '${context.l10n.memoryDay.toUpperCase()}: ',
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
                   ),
-                  child: Text(
-                    item.description,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(Configs.commonRadius),
-                  ),
-                  child: Text(
-                    DateFormat('dd-MM-yyyy').format(
-                      DateTime.parse(item.date),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(Configs.commonRadius),
                     ),
-                    style: Theme.of(context).textTheme.titleSmall,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 5),
+                        AssetsClass.icons.calenderClock
+                            .svg(width: 24, color: Colors.black87),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            DateFormat('dd/MM/yyyy').format(
+                              DateTime.parse(item.date),
+                            ),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  const SizedBox(height: 5),
+                  TextButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => ComfromDeleteBottomsheet())
+                          .then(
+                        (value) {
+                          if (value is bool && value) {
+                            serviceLocator<SharePrefer>()
+                                .removeLoveStory(item.id)
+                                .then((value) {
+                              Navigator.pop(context, value);
+                            });
+                          }
+                        },
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      minimumSize:
+                          Size(Device.width, Configs.commonHeightButton),
+                      backgroundColor: Color(0xffFF0000),
+                    ),
+                    child: Text(
+                      context.l10n.delete,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        TextButton(
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (context) => ComfromDeleteBottomsheet()).then(
-              (value) {
-                if (value is bool && value) {
-                  serviceLocator<SharePrefer>()
-                      .removeLoveStory(item.id)
-                      .then((value) {
-                    Navigator.pop(context, value);
-                  });
-                }
-              },
-            );
-          },
-          style: TextButton.styleFrom(
-            minimumSize: Size(Device.width - 30, Configs.commonHeightButton),
-            backgroundColor: Color(0xffFF0000),
-          ),
-          child: Text(
-            context.l10n.delete,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: Colors.white,
-                ),
-          ),
-        ),
-        SizedBox(height: 20)
-      ],
+        ],
+      ),
     );
   }
 }

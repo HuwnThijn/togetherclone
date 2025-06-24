@@ -295,4 +295,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get upload => 'Upload';
+
+  @override
+  String get memoryName => 'Memory Name';
+
+  @override
+  String get enterName => 'Enter Name';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get memoryDay => 'Memory Day';
+
+  @override
+  String get editMemory => 'Edit Memory';
+
+  @override
+  String get infomationMemory => 'Information Memory';
+
+  @override
+  String get doYouWantToDeleteThisMemory =>
+      'Do you want to delete this memory?';
+
+  @override
+  String get daysLeft => 'days left';
+
+  @override
+  String get dayLeft => 'day left';
 }

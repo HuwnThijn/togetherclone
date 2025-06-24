@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lovejourney/pages/user_info/female_info_page.dart';
+import 'package:lovejourney/pages/user_info/male_info_page.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/enumlist.dart';
@@ -55,6 +57,26 @@ class _CountLoveViewState extends State<CountLoveView>
     frame = serviceLocator<SharePrefer>().getFrameUser();
     isLoading = false;
     setState(() {});
+  }
+
+  void _navigateToMaleInfoPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MaleInfoPage()),
+    );
+    if (result == true) {
+      getLoveData();
+    }
+  }
+
+  void _navigateToFemaleInfoPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FemaleInfoPage()),
+    );
+    if (result == true) {
+      getLoveData();
+    }
   }
 
   void handleOption(int index, bool isMen) {
@@ -373,17 +395,18 @@ class _CountLoveViewState extends State<CountLoveView>
                   children: [
                     InkWell(
                       onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) =>
-                                ChangedOptionBottomsheet()).then(
-                          (value) {
-                            if (value is int) {
-                              handleOption(value, true);
-                            }
-                          },
-                        );
+                        _navigateToMaleInfoPage();
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     backgroundColor: Colors.transparent,
+                        //     builder: (context) =>
+                        //         ChangedOptionBottomsheet()).then(
+                        //   (value) {
+                        //     if (value is int) {
+                        //       handleOption(value, true);
+                        //     }
+                        //   },
+                        // );
                       },
                       child: Column(
                         spacing: 10,
@@ -455,17 +478,18 @@ class _CountLoveViewState extends State<CountLoveView>
                     // ),
                     InkWell(
                       onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) =>
-                                ChangedOptionBottomsheet()).then(
-                          (value) {
-                            if (value is int) {
-                              handleOption(value, false);
-                            }
-                          },
-                        );
+                        _navigateToFemaleInfoPage();
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     backgroundColor: Colors.transparent,
+                        //     builder: (context) =>
+                        //         ChangedOptionBottomsheet()).then(
+                        //   (value) {
+                        //     if (value is int) {
+                        //       handleOption(value, false);
+                        //     }
+                        //   },
+                        // );
                       },
                       child: Column(
                         spacing: 10,

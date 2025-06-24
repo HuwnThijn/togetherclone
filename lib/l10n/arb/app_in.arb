@@ -92,5 +92,14 @@
   "newMemory": "नई याद",
   "youDonthaveanymemoriesyet": "आपके पास अभी तक कोई यादें नहीं हैं!",
   "photoBackground": "फ़ोटो की पृष्ठभूमि",
-  "upload": "अपलोड करें"
+  "upload": "अपलोड करें",
+  "memoryName": "स्मृति का नाम",
+  "enterName": "नाम दर्ज करें",
+  "create": "बनाएँ",
+  "memoryDay": "स्मृति दिवस",
+  "editMemory": "याद संपादित करें",
+  "infomationMemory": "याद की जानकारी",
+  "doYouWantToDeleteThisMemory": "क्या आप इस याद को हटाना चाहते हैं?",
+  "daysLeft": "बचे हुए दिन",
+  "dayLeft": "बचा हुआ दिन"
 }

@@ -92,5 +92,14 @@
   "newMemory": "Kỷ niệm mới",
   "youDonthaveanymemoriesyet": "Bạn chưa có bất kỳ kỷ niệm nào!",
   "photoBackground": "Ảnh nền",
-  "upload": "Tải lên"
+  "upload": "Tải lên",
+  "memoryName": "Tên kỷ niệm",
+  "enterName": "Nhập tên",
+  "create": "Tạo",
+  "memoryDay": "Ngày kỷ niệm",
+  "editMemory": "Chỉnh sửa kỷ niệm",
+  "infomationMemory": "Thông tin kỷ niệm",
+  "doYouWantToDeleteThisMemory": "Bạn có muốn xóa kỷ niệm này không?",
+  "daysLeft": "ngày còn lại",
+  "dayLeft": "ngày còn lại"
 }
