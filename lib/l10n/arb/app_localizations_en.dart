@@ -330,4 +330,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get theDayWeStartedLovingEachOther =>
       'The day we started loving each other';
+
+  @override
+  String get reviewUs => 'Review Us';
+
+  @override
+  String get doYouLoveOurApp => 'Do you love our app?';
+
+  @override
+  String get sendSummit => 'Send Submit';
 }

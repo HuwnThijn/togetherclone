@@ -432,6 +432,9 @@ class $AssetsImagesGen {
   AssetGenImage get imageWoman =>
       const AssetGenImage('assets/images/image_woman.png');
 
+  /// File path: assets/images/review.png
+  AssetGenImage get review => const AssetGenImage('assets/images/review.png');
+
   /// File path: assets/images/undraw_maintenance_rjtm.png
   AssetGenImage get undrawMaintenanceRjtm =>
       const AssetGenImage('assets/images/undraw_maintenance_rjtm.png');
@@ -486,6 +489,7 @@ class $AssetsImagesGen {
     imageUndrawFriendsXscy,
     imageUndrawSuperthankyouFlq,
     imageWoman,
+    review,
     undrawMaintenanceRjtm,
   ];
 }

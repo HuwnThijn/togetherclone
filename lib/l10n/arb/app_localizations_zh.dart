@@ -325,4 +325,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get theDayWeStartedLovingEachOther => '我们开始相爱的日子';
+
+  @override
+  String get reviewUs => '评价我们';
+
+  @override
+  String get doYouLoveOurApp => '您喜欢我们的应用吗？';
+
+  @override
+  String get sendSummit => '发送提交';
 }

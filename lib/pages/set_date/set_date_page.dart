@@ -196,7 +196,7 @@ class _SetDatePageState extends State<SetDatePage> {
                           : null,
                       style: TextButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(20)),
                         minimumSize:
                             Size(Device.width - 30, Configs.commonHeightButton),
                         backgroundColor: gender != null
@@ -205,12 +205,15 @@ class _SetDatePageState extends State<SetDatePage> {
                                 : Configs.listColorTheme.first)
                             : Colors.grey.shade300,
                       ),
-                      child: Text(
-                        context.l10n.confirm,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          context.l10n.confirm,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ))
                 ],
               ),

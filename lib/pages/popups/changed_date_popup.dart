@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lovejourney/cores/app_colors.dart';
+import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
 
 class ChangedDatePopup extends StatefulWidget {
@@ -59,7 +60,11 @@ class _ChangedDatePopupState extends State<ChangedDatePopup> {
                 const Spacer(),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.close, size: 22, color: Colors.grey),
+                  child: AssetsClass.icons.circleXmark.svg(
+                    width: 24,
+                    height: 24,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),

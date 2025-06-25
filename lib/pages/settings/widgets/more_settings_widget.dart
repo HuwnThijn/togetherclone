@@ -66,9 +66,7 @@ class MoreSettingsWidget extends StatelessWidget {
               color: AppColors.accentDark,
             ),
             onPressed: () async {
-              if (await inAppReview.isAvailable()) {
-                inAppReview.requestReview();
-              }
+              _showReviewDialog(context);
             },
           ),
           ButtonSettingWidget2(
@@ -130,6 +128,132 @@ class MoreSettingsWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showReviewDialog(BuildContext context) {
+    int selectedRating = 0;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 16,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: AssetsClass.icons.circleXmark.svg(
+                            width: 24,
+                            height: 24,
+                            color: Colors.black,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        const Spacer(),
+                        Text(
+                          context.l10n.reviewUs,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 115), 
+                      ],
+                    ),
+                  ),
+                  // Nút đóng
+
+                  SizedBox(height: 10),
+                  Image.asset(AssetsClass.images.review.path,
+                      width: 150, height: 100),
+
+                  SizedBox(height: 10),
+                  Text(
+                    context.l10n.doYouLoveOurApp,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedRating = index + 1;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 1),
+                          child: Icon(
+                            // Hiển thị sao đầy khi được chọn, ngược lại hiển thị sao rỗng
+                            index < selectedRating
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: index < selectedRating
+                                ? Colors.amber
+                                : Colors.grey,
+                            size: 35,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: ElevatedButton(
+                      onPressed: selectedRating > 0
+                          ? () async {
+                              Navigator.of(context).pop();
+
+                              if (await inAppReview.isAvailable()) {
+                                inAppReview.requestReview();
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg: "Thanks for your rating!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                );
+                              }
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedRating > 0
+                            ? Colors.blue
+                            : Colors.grey.shade300,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.grey,
+                        disabledBackgroundColor: Colors.grey.shade300,
+                      ),
+                      child: Text(context.l10n.sendSummit,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
     );
   }
 }

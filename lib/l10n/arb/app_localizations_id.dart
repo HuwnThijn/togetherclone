@@ -331,4 +331,13 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get theDayWeStartedLovingEachOther =>
       'जिस दिन हमने एक-दूसरे से प्यार करना शुरू किया';
+
+  @override
+  String get reviewUs => 'हमें समीक्षा करें';
+
+  @override
+  String get doYouLoveOurApp => 'क्या आपको हमारा ऐप पसंद है?';
+
+  @override
+  String get sendSummit => 'सबमिट भेजें';
 }

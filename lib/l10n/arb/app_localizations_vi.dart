@@ -330,4 +330,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get theDayWeStartedLovingEachOther => 'Ngày chúng ta bắt đầu yêu nhau';
+
+  @override
+  String get reviewUs => 'Đánh giá chúng tôi';
+
+  @override
+  String get doYouLoveOurApp => 'Bạn có thích ứng dụng của chúng tôi không?';
+
+  @override
+  String get sendSummit => 'Gửi đánh giá';
 }

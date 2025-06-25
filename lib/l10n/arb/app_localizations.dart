@@ -731,6 +731,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The day we started loving each other'**
   String get theDayWeStartedLovingEachOther;
+
+  /// No description provided for @reviewUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Us'**
+  String get reviewUs;
+
+  /// No description provided for @doYouLoveOurApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you love our app?'**
+  String get doYouLoveOurApp;
+
+  /// No description provided for @sendSummit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Submit'**
+  String get sendSummit;
 }
 
 class _AppLocalizationsDelegate

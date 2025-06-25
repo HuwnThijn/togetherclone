@@ -29,6 +29,7 @@ class _LanguagePageState extends State<LanguagePage> {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
+            colorFilter: ColorFilter.mode(AppColors.accentDark, BlendMode.srcATop),
             image: AssetImage(AssetsClass.images.imageBackgroundLove.path),
             fit: BoxFit.cover),
       ),
@@ -38,7 +39,7 @@ class _LanguagePageState extends State<LanguagePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 10,
           children: [
-            AssetsClass.images.imageUndrawDocumentAnalysis.image(width: 214),
+            AssetsClass.images.imageUndrawDocumentAnalysis.image(width: 200, color: AppColors.accentDark),
             SizedBox(height: 10),
             Center(
               child: Text(context.l10n.language,
@@ -62,17 +63,23 @@ class _LanguagePageState extends State<LanguagePage> {
                       context, createRouter(SetDatePage()));
                 },
                 style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
                   minimumSize:
                       Size(Device.width - 30, Configs.commonHeightButton),
                   backgroundColor: Shared.instance.isMainColor
                       ? AppColors.accentDark
                       : Configs.listColorTheme.first,
                 ),
-                child: Text(
-                  context.l10n.select,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(
+                    context.l10n.select,
+                    style: TextStyle(
                         color: Colors.white,
-                      ),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ))
           ],
         ),
