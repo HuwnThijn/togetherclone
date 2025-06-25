@@ -132,10 +132,10 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: gender != null ? _onSave : null,
+        onPressed: gender != loveData?.gender ? _onSave : null,
         style: ElevatedButton.styleFrom(
           backgroundColor:
-              gender != null ? AppColors.accentDark : Colors.grey.shade300,
+              gender != loveData?.gender ? AppColors.accentDark : Colors.grey.shade300,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -145,7 +145,7 @@ class _ChangedGenderPageState extends State<ChangedGenderPage> {
         child: Text(
           context.l10n.save,
           style: TextStyle(
-            color: gender != null ? Colors.white : Colors.grey,
+            color: gender != loveData?.gender ? Colors.white : Colors.grey,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

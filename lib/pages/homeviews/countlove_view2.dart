@@ -211,7 +211,7 @@ class _CountLoveView2State extends State<CountLoveView2>
                                       padding: const EdgeInsets.all(20),
                                       decoration: BoxDecoration(
                                           color: AppColors.accentDark
-                                              .withValues(alpha: .2),
+                                              .withValues(alpha: .1),
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: Border.all(
@@ -323,30 +323,13 @@ class _CountLoveView2State extends State<CountLoveView2>
               Positioned(
                 left: 350,
                 top: 55,
-                child: Container(
+                child: SizedBox(
                     width: 55,
                     height: 55,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      //color: Colors.black.withValues(alpha: 38),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(200),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x0C000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
                     child: IconButton(
                       icon: AssetsClass.icons.settings.svg(
                         width: 55,
-                        color: Shared.instance.isMainColor
-                            ? AppColors.accentDark
-                            : Colors.white,
+                        color: AppColors.accentDark,
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -382,21 +365,6 @@ class _CountLoveView2State extends State<CountLoveView2>
                 child: Container(
                   width: 55,
                   height: 55,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    //color: Colors.black.withValues(alpha: 38),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(200),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x0C000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
                   child: Stack(
                     children: [
                       Positioned(
@@ -408,9 +376,7 @@ class _CountLoveView2State extends State<CountLoveView2>
                                   context, createRouter(LoveStoryPage())),
                               icon: AssetsClass.icons.calendarHeart.svg(
                                   width: 40,
-                                  color: Shared.instance.isMainColor
-                                      ? AppColors.accentDark
-                                      : Colors.white)),
+                                  color: AppColors.accentDark)),
                         ),
                       ),
                     ],
@@ -420,24 +386,9 @@ class _CountLoveView2State extends State<CountLoveView2>
               Positioned(
                 left: 10,
                 top: 55,
-                child: Container(
+                child: SizedBox(
                   width: 55,
                   height: 55,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    //color: Colors.black.withValues(alpha: 38),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(200),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x0C000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
                   child: Stack(
                     children: [
                       Positioned(

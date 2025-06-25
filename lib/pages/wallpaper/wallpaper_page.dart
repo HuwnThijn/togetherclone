@@ -8,10 +8,10 @@ import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
-import 'package:lovejourney/cores/themes_app.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
+import 'package:lovejourney/pages/bottomsheets/choose_option_camera_bottomsheet.dart';
 
 class WallpaperPage extends StatefulWidget {
   const WallpaperPage({super.key});
@@ -61,7 +61,34 @@ class _WallpaperPageState extends State<WallpaperPage> {
         Padding(
           padding: const EdgeInsets.only(right: 10),
           child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const ChooseOptionCameraBottomsheet(),
+                ).then((value) async {
+                  if (value != null) {
+                    final ImagePicker picker = ImagePicker();
+                    XFile? image;
+                    image = await picker.pickImage(source: value);
+
+                    if (image != null) {
+                      try {
+                        final bytes = await image.readAsBytes();
+
+                        final base64Image = base64Encode(bytes);
+
+                        await stores.saveBackground(base64Image);
+
+                        serviceLocator<MessagingService>().send(
+                            channel: MessageChannel.themeChanged,
+                            parameter: true);
+
+                        setState(() {});
+                      } catch (e) {}
+                    }
+                  }
+                });
+              },
               icon: AssetsClass.icons.file2.svg(
                 color: Colors.white,
                 width: 24,
@@ -101,14 +128,18 @@ class _WallpaperPageState extends State<WallpaperPage> {
                               .then(
                             (value) {
                               Navigator.pop(context);
-                              serviceLocator<MessagingService>().send(channel: MessageChannel.themeChanged, parameter: true);
+                              serviceLocator<MessagingService>().send(
+                                  channel: MessageChannel.themeChanged,
+                                  parameter: true);
                             },
                           );
                         } else {
                           stores.saveBackground(listImage[index]).then(
                             (value) {
                               Navigator.pop(context);
-                              serviceLocator<MessagingService>().send(channel: MessageChannel.themeChanged, parameter: true);
+                              serviceLocator<MessagingService>().send(
+                                  channel: MessageChannel.themeChanged,
+                                  parameter: true);
                             },
                           );
                         }

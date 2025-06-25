@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
@@ -152,7 +153,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               width: 20,
               color: AppColors.accentDark,
             ),
-            onPressed: () => Navigator.pushNamed(context, Routes.wallpaperPage),
+            onPressed: () { Fluttertoast.showToast(msg: context.l10n.functionunderdevelopment); },
           ),
           ButtonSettingWidget2(
             title: context.l10n.background,
@@ -163,79 +164,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             onPressed: () => Navigator.pushNamed(context, Routes.wallpaperPage),
           ),
 
-          // ButtonSettingWidget(
-          //   title: context.l10n.changeTheme,
-          //   child: Container(
-          //     width: 20,
-          //     height: 20,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(5),
-          //         color: AppColors.accentDark),
-          //   ),
-          //   onPressed: () {
-          //     showModalBottomSheet(
-          //         backgroundColor: Colors.transparent,
-          //         context: context,
-          //         builder: (context) => ChangedThemeBottomsheet()).then(
-          //       (value) {
-          //         if (value is Color) {
-          //           serviceLocator<SharePrefer>().saveMainColor(value).then(
-          //             (_) {
-          //               AppColors.setMainColor(value);
-          //               serviceLocator<MessagingService>().send(
-          //                   channel: MessageChannel.themeChanged,
-          //                   parameter: '');
-          //             },
-          //           );
-          //         }
-          //       },
-          //     );
-          //   },
-          // ),
-          // ButtonSettingWidget(
-          //   title: context.l10n.changeIconApp,
-          //   onPressed: () => showModalBottomSheet(
-          //       context: context,
-          //       backgroundColor: Colors.transparent,
-          //       builder: (context) => ChangedIconAppBottomsheet()).then(
-          //     (value) {
-          //       if (value is String && value.isNotEmpty) {
-          //         Shared.instance.iconApp = Configs.listIcon
-          //             .firstWhere((element) => element.id == value);
-          //         applyIconChanged(Shared.instance.iconApp);
-          //       }
-          //     },
-          //   ),
-          // ),
-          // ButtonSettingWidget(
-          //   title: context.l10n.language,
-          //   onPressed: () {
-          //     showModalBottomSheet(
-          //         context: context,
-          //         backgroundColor: Colors.transparent,
-          //         builder: (context) => ChangedLanguageBottomsheet()).then(
-          //       (value) {
-          //         if (value is String && value.isNotEmpty) {
-          //           serviceLocator<SharePrefer>().saveLanguage(value).then(
-          //             (_) {
-          //               Shared.instance.languageCode = Locale(value);
-          //               serviceLocator<MessagingService>().send(
-          //                   channel: MessageChannel.languageChanged,
-          //                   parameter: '');
-          //             },
-          //           );
-          //         }
-          //       },
-          //     );
-          //   },
-          // ),
-          // ButtonSettingWidget(
-          //   title: context.l10n.usePasswordLock,
-          //   isLine: false,
-          //   icon: AssetsClass.images.imageCrown.image(width: 20),
-          //   onPressed: () =>
-          //       Navigator.push(context, createRouter(LockAppPage())),
-          // ),
         ],
       ),
     );

@@ -15,9 +15,19 @@ class _CustomIndotWidgetState extends State<CustomIndotWidget> {
   @override
   void initState() {
     super.initState();
-    widget.tabController.addListener(() {
+    widget.tabController.addListener(_handleTabChange);
+  }
+
+  @override
+  void dispose() {
+    widget.tabController.removeListener(_handleTabChange);
+    super.dispose();
+  }
+
+  void _handleTabChange() {
+    if (mounted) {
       setState(() {});
-    });
+    }
   }
 
   @override

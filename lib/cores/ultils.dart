@@ -159,15 +159,34 @@ Decoration getDecoration(ShapeType type) {
 }
 
 void launchEmail({required String email}) async {
-  final Uri emailUri = Uri(
-    scheme: 'mailto',
-    path: email,
-    queryParameters: {'subject': 'Support', 'body': ''},
-  );
+    Uri emailLaunchUri = Uri(
+                          scheme: 'mailto',
+                          path: email,
+                          query: encodeQueryParameters(<String, String>{
+                            'subject': ' Feedback !',
+                            'body':
+                                'App Name:  \n Store App:  \n Feedback: ',
+                          }),
+                        );
 
-  if (await canLaunchUrl(emailUri)) {
-    await launchUrl(emailUri);
+
+  if (  await launchUrl(
+      emailLaunchUri,
+      mode: LaunchMode.externalApplication,
+    )) {
+    await launchUrl(
+      emailLaunchUri,
+      mode: LaunchMode.externalApplication,
+    );
   } else {
     throw 'Không thể mở ứng dụng email';
   }
 }
+ String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map(
+          (MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+        )
+        .join('&');
+  }

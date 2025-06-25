@@ -48,9 +48,7 @@ class _ChooseOptionCameraBottomsheetState
                 _buildOption(
                     AssetsClass.icons.picture.svg(
                         width: 24,
-                        color: Shared.instance.isMainColor
-                            ? AppColors.accentDark
-                            : null),
+                        color: AppColors.accentDark),
                     title: context.l10n.gallery,
                     onTap: () => Navigator.pop(context, ImageSource.gallery)),
               ],

@@ -338,16 +338,18 @@ class _FemaleInfoPageState extends State<FemaleInfoPage> {
   }
 
   Widget _buildSaveButton() {
-    final bool hasChanged = loveData?.loveday != null
-        ? DateTime.tryParse(loveData!.dobWoman)?.millisecondsSinceEpoch !=
-            loveData!.loveday
-        : true;
+    bool hasUsername = _nameController.text.trim().isNotEmpty ||
+        (loveData?.nameWoman != null && loveData!.nameWoman.isNotEmpty);
+    bool hasBirthday = loveData?.dobWoman != null &&
+        loveData!.dobWoman.isNotEmpty &&
+        DateTime.tryParse(loveData!.dobWoman) != null;
+    bool canSave = hasUsername && hasBirthday;
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: hasChanged ? _onSave : null,
+        onPressed: canSave ? _onSave : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: hasChanged ? AppColors.accentDark : Colors.grey,
+          backgroundColor: canSave ? AppColors.accentDark : Colors.grey,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
