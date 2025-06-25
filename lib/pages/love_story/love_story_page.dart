@@ -111,46 +111,6 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
           }
         },
       ),
-      // child: Container(
-      //   padding: EdgeInsets.all(10),
-      //   decoration: BoxDecoration(
-      //     color: Theme.of(context).cardColor,
-      //     borderRadius: BorderRadius.circular(Configs.commonRadius),
-      //   ),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     spacing: 5,
-      //     children: [
-      //       Row(
-      //         spacing: 10,
-      //         children: [
-      //           AssetsClass.icons.calendarHeart
-      //               .svg(width: 24, color: AppColors.accentDark),
-      //           Text(
-      //             DateFormat('dd-MM-yyyy').format(
-      //               DateTime.parse(item.date),
-      //             ),
-      //             style: Theme.of(context).textTheme.titleSmall,
-      //           )
-      //         ],
-      //       ),
-      //       Text(
-      //         item.description,
-      //         style: Theme.of(context).textTheme.titleSmall,
-      //       ),
-      //       if (item.image.isNotEmpty)
-      //         ClipRRect(
-      //           borderRadius: BorderRadius.circular(Configs.commonRadius),
-      //           child: Image.file(
-      //             File(item.image),
-      //             width: double.infinity,
-      //             height: 160,
-      //             fit: BoxFit.cover,
-      //           ),
-      //         ),
-      //     ],
-      //   ),
-      // ),
       child: Padding(padding: const EdgeInsets.symmetric(vertical: 10),
         child: MemoryCard(
           title: item.description,

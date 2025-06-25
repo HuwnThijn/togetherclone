@@ -153,7 +153,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               width: 20,
               color: AppColors.accentDark,
             ),
-            onPressed: () { Fluttertoast.showToast(msg: context.l10n.functionunderdevelopment); },
+            onPressed: () { Navigator.pushNamed(context, Routes.framePage); },
           ),
           ButtonSettingWidget2(
             title: context.l10n.background,

@@ -344,6 +344,10 @@ class $AssetsImagesGen {
   AssetGenImage get imageIconApp =>
       const AssetGenImage('assets/images/image_icon_app.png');
 
+  /// File path: assets/images/image_list_frame_empty.png
+  AssetGenImage get imageListFrameEmpty =>
+      const AssetGenImage('assets/images/image_list_frame_empty.png');
+
   /// File path: assets/images/image_list_story_empty.png
   AssetGenImage get imageListStoryEmpty =>
       const AssetGenImage('assets/images/image_list_story_empty.png');
@@ -467,6 +471,7 @@ class $AssetsImagesGen {
     imageFlagVietnam,
     imageHomeDefault,
     imageIconApp,
+    imageListFrameEmpty,
     imageListStoryEmpty,
     imageLock,
     imageMen,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/routes/routes.dart';
 import 'package:lovejourney/pages/dating/start_dating_page.dart';
+import 'package:lovejourney/pages/frame/frame_page.dart';
 import 'package:lovejourney/pages/gender/changed_gender_page.dart';
 import 'package:lovejourney/pages/home_page.dart';
 import 'package:lovejourney/pages/user_info/female_info_page.dart';
@@ -66,13 +67,13 @@ class NavigatorRoutes {
               builder: ((context) => page),
               settings: const RouteSettings(name: Routes.wallpaperPage));
         }
-      // case Routes.framePage:
-      //   {
-      //     const page = FramePage();
-      //     return CupertinoPageRoute(
-      //         builder: ((context) => page),
-      //         settings: const RouteSettings(name: Routes.framePage));
-      //   }
+      case Routes.framePage:
+        {
+          const page = FramePage();
+          return CupertinoPageRoute(
+              builder: ((context) => page),
+              settings: const RouteSettings(name: Routes.framePage));
+        }
       // case Routes.reviewPage:
       //   {
       //     const page = ReviewPage();
