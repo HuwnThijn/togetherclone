@@ -390,14 +390,6 @@ class _CountLoveViewState extends State<CountLoveView>
               Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                // decoration: BoxDecoration(boxShadow: [
-                //   BoxShadow(
-                //     color:
-                //         AppColors.unIndicatorColor(Shared.instance.isDarkMode),
-                //     blurRadius: 100,
-                //     spreadRadius: 100,
-                //   )
-                // ]),
                 child: Row(
                   spacing: 20,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

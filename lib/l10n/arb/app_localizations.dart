@@ -725,6 +725,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Being Together'**
   String get beingTogether;
+
+  /// No description provided for @theDayWeStartedLovingEachOther.
+  ///
+  /// In en, this message translates to:
+  /// **'The day we started loving each other'**
+  String get theDayWeStartedLovingEachOther;
 }
 
 class _AppLocalizationsDelegate

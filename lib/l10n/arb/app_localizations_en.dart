@@ -326,4 +326,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get beingTogether => 'Being Together';
+
+  @override
+  String get theDayWeStartedLovingEachOther =>
+      'The day we started loving each other';
 }

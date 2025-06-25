@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
+import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/path_image.dart';
@@ -10,39 +14,55 @@ import 'package:lovejourney/cores/routes/routes.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
+import 'package:lovejourney/cores/ultils.dart';
+import 'package:lovejourney/cores/widgets/custom_indot.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
 import 'package:lovejourney/l10n/l10n.dart';
+import 'package:lovejourney/pages/homeviews/animation_heart_widget.dart';
+import 'package:lovejourney/pages/homeviews/widgets/user_profile_widget.dart';
+import 'package:lovejourney/pages/love_story/love_story_page.dart';
+import 'package:lovejourney/pages/settings/sidebar_setting.dart';
 
 class CountLoveView2 extends StatefulWidget {
   const CountLoveView2({super.key});
 
   @override
-  State<CountLoveView2> createState() => _CountLoveViewState();
+  State<CountLoveView2> createState() => _CountLoveView2State();
 }
 
-class _CountLoveViewState extends State<CountLoveView2> {
-  LoveDayModel? loveData;
+class _CountLoveView2State extends State<CountLoveView2>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  late final TabController tabController;
+  late LoveDayModel loveData;
   bool isLoading = true;
   String frame = '';
+  String backGround = '';
   String backgroundImage = ''; // Optional: background image path
 
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 2, vsync: this);
     getLoveData();
-    
-    // Subscribe to data changes
     serviceLocator<MessagingService>().subscribe(
       this,
-      channel: MessageChannel.userDataChanged,
-      action: (val) => getLoveData(),
+      channel: MessageChannel.lovedayChanged,
+      action: (_) => getLoveData(),
     );
+    serviceLocator<MessagingService>().subscribe(this,
+        channel: MessageChannel.userDataChanged, action: (_) => getLoveData());
+    serviceLocator<MessagingService>().subscribe(this,
+        channel: MessageChannel.themeChanged, action: (_) => getLoveData());
   }
 
   @override
   void dispose() {
     serviceLocator<MessagingService>()
+        .unsubscribe(this, channel: MessageChannel.lovedayChanged);
+    serviceLocator<MessagingService>()
         .unsubscribe(this, channel: MessageChannel.userDataChanged);
+    serviceLocator<MessagingService>()
+        .unsubscribe(this, channel: MessageChannel.themeChanged);
     super.dispose();
   }
 
@@ -54,7 +74,8 @@ class _CountLoveViewState extends State<CountLoveView2> {
     try {
       loveData = await serviceLocator<SharePrefer>().getLoveday();
       frame = serviceLocator<SharePrefer>().getFrameUser();
-      
+      backGround = serviceLocator<SharePrefer>().getBackground();
+
       setState(() {
         isLoading = false;
       });
@@ -78,1006 +99,548 @@ class _CountLoveViewState extends State<CountLoveView2> {
   }
 
   Widget _buildLoveContent() {
-    // Calculate days together
-    int daysTogether = 0;
-    if (loveData?.loveday != null) {
-      final startDate = DateTime.fromMillisecondsSinceEpoch(loveData!.loveday!);
-      final currentDate = DateTime.now();
-      daysTogether = currentDate.difference(startDate).inDays;
-    }
-
-    // Format the date for display
-    String formattedDate = '';
-    if (loveData?.loveday != null) {
-      final date = DateTime.fromMillisecondsSinceEpoch(loveData!.loveday!);
-      formattedDate = DateFormat('dd/MM/yyyy').format(date);
-    }
-
-    return Container(
-    width: double.infinity,
-    height: double.infinity,
-    clipBehavior: Clip.antiAlias,
-    decoration: BoxDecoration(color: Colors.white),
-    child: Stack(
-        children: [
-            Positioned(
-                left: -79,
-                top: -8,
-                child: Container(
-                    width: 700,
-                    height: 510,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.asset(AssetsClass.images.imageHomeDefault.path).image,
-                            fit: BoxFit.cover,
-                        ),
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                    width: 393,
-                    height: 496,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                        //color: Colors.black.withValues(alpha: 26),
-                    ),
-                    child: Stack(
-                        children: [
-                            Column(
-                      children: [
-                        Container(
-                          height: 300,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(PathImage.im_frame_love),
-                              fit: BoxFit.fill,
-                              colorFilter: Shared.instance.isMainColor
-                                  ? ColorFilter.mode(
-                                      AppColors.accentDark, BlendMode.srcATop)
-                                  : null,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                context.l10n.beingTogether,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white),
-                              ),
-                              Builder(builder: (context) {
-                                final total =
-                                    DateTime.now().difference(
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        loveData?.loveday ?? 0));
-                                return Text(
-                                  '${total.inDays}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge
-                                      ?.copyWith(
-                                        color: const Color.fromRGBO(255, 175, 204, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 80,
-                                      ),
-                                );
-                              }),
-                              Text(
-                                context.l10n.days,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                    width: 393,
-                    height: 54,
-                    child: Stack(
-                        children: [
-                            Positioned(
-                                left: 0,
-                                top: 0,
-                                child: Container(
-                                    width: 140.50,
-                                    height: 54,
-                                    child: Stack(
-                                        children: [
-                                            Positioned(
-                                                left: 51.92,
-                                                top: 18.34,
-                                                child: Text(
-                                                    '9:41',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 17,
-                                                        fontFamily: 'SF Pro',
-                                                        fontWeight: FontWeight.w500,
-                                                        height: 1.29,
-                                                    ),
-                                                ),
-                                            ),
-                                        ],
-                                    ),
-                                ),
-                            ),
-                            Positioned(
-                                left: 252.50,
-                                top: 0,
-                                child: Container(
-                                    width: 140.50,
-                                    height: 54,
-                                    child: Stack(
-                                        children: [
-                                            Positioned(
-                                                left: 81,
-                                                top: 23,
-                                                child: Opacity(
-                                                    opacity: 0.35,
-                                                    child: Container(
-                                                        width: 25,
-                                                        height: 13,
-                                                        decoration: ShapeDecoration(
-                                                            shape: RoundedRectangleBorder(
-                                                                side: BorderSide(width: 1),
-                                                                borderRadius: BorderRadius.circular(4.30),
-                                                            ),
-                                                        ),
-                                                    ),
-                                                ),
-                                            ),
-                                            Positioned(
-                                                left: 83,
-                                                top: 25,
-                                                child: Container(
-                                                    width: 21,
-                                                    height: 9,
-                                                    decoration: ShapeDecoration(
-                                                        color: Colors.black,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(2.50),
-                                                        ),
-                                                    ),
-                                                ),
-                                            ),
-                                        ],
-                                    ),
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 344,
-                top: 75,
-                child: Container(
-                    width: 30,
-                    height: 30,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 38),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(200),
-                        ),
-                        shadows: [
-                            BoxShadow(
-                                color: Color(0x0C000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                                spreadRadius: 0,
-                            )
-                        ],
-                    ),
-                    child: Stack(
-                        children: [
-                            Positioned(
-                                left: 3,
-                                top: 3,
-                                child: Container(
-                                    width: 24,
-                                    height: 24,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: ShapeDecoration(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                    ),
-                                    child: Stack(),
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 304,
-                top: 75,
-                child: Container(
-                    width: 30,
-                    height: 30,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 38),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(200),
-                        ),
-                        shadows: [
-                            BoxShadow(
-                                color: Color(0x0C000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                                spreadRadius: 0,
-                            )
-                        ],
-                    ),
-                    child: Stack(
-                        children: [
-                            Positioned(
-                                left: 3,
-                                top: 3,
-                                child: Container(
-                                    width: 24,
-                                    height: 24,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: ShapeDecoration(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                    ),
-                                    child: Stack(),
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 20,
-                top: 75,
-                child: Container(
-                    width: 30,
-                    height: 30,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 38),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(200),
-                        ),
-                        shadows: [
-                            BoxShadow(
-                                color: Color(0x0C000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                                spreadRadius: 0,
-                            )
-                        ],
-                    ),
-                    child: Stack(
-                        children: [
-                            Positioned(
-                                left: 3,
-                                top: 3,
-                                child: Container(
-                                    width: 24,
-                                    height: 24,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
-                                    child: Stack(),
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: -307,
-                top: 413,
-                child: Container(
-                    width: 530,
-                    height: 257,
-                    decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: OvalBorder(),
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 172,
-                top: 413,
-                child: Container(
-                    width: 530,
-                    height: 257,
-                    decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: OvalBorder(),
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 172,
-                top: 654,
-                child: Container(
-                    width: 49,
-                    height: 49,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage("https://placehold.co/49x49"),
-                            fit: BoxFit.cover,
-                        ),
-                        boxShadow: [
-                            BoxShadow(
-                                color: Color(0x0C000000),
-                                blurRadius: 2,
-                                offset: Offset(0, 2),
-                                spreadRadius: 0,
-                            )
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 71,
-                top: 507,
-                child: Text(
-                    'The day we started loving each other',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: const Color(0xFF5E5E5E),
-                        fontSize: 16,
-                        fontFamily: 'Inria Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1.38,
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 19,
-                top: 540,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '1',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 114,
-                top: 540.09,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '0',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 209,
-                top: 540.09,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '2',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 293,
-                top: 540.09,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '2',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 61,
-                top: 540.09,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '2',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 156,
-                top: 540.19,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '6',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 251,
-                top: 540.19,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '0',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 335,
-                top: 540.19,
-                child: Container(
-                    width: 39,
-                    height: 38.14,
-                    padding: const EdgeInsets.all(9.07),
-                    decoration: ShapeDecoration(
-                        color: Colors.black.withValues(alpha: 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(181.40),
-                        ),
-                    ),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 9.07,
-                        children: [
-                            Text(
-                                '3',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: const Color(0xFFFF6B6B),
-                                    fontSize: 20,
-                                    fontFamily: 'Inria Sans',
-                                    fontWeight: FontWeight.w700,
-                                    height: 1,
-                                ),
-                            ),
-                        ],
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 103,
-                top: 547.09,
-                child: SizedBox(
-                    width: 8,
-                    height: 22,
-                    child: Text(
-                        '/',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: const Color(0x7F5E5E5E),
-                            fontSize: 20,
-                            fontFamily: 'Inria Sans',
-                            fontWeight: FontWeight.w400,
-                            height: 1,
-                        ),
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 198,
-                top: 547.09,
-                child: SizedBox(
-                    width: 8,
-                    height: 22,
-                    child: Text(
-                        '/',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: const Color(0x7F5E5E5E),
-                            fontSize: 20,
-                            fontFamily: 'Inria Sans',
-                            fontWeight: FontWeight.w400,
-                            height: 1,
-                        ),
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 43,
-                top: 738,
-                child: Text(
-                    'Username 1',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: const Color(0xFF5E5E5E),
-                        fontSize: 20,
-                        fontFamily: 'Inria Sans',
-                        fontWeight: FontWeight.w700,
-                        height: 1.10,
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 54,
-                top: 764,
-                child: Text(
-                    'DD/MM/YYYY',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: const Color(0xFF5E5E5E),
-                        fontSize: 14,
-                        fontFamily: 'Inria Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1.57,
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 257,
-                top: 764,
-                child: Text(
-                    'DD/MM/YYYY',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: const Color(0xFF5E5E5E),
-                        fontSize: 14,
-                        fontFamily: 'Inria Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1.57,
-                    ),
-                ),
-            ),
-            Positioned(
-                left: 245,
-                top: 738,
-                child: Text(
-                    'Username 2',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: const Color(0xFF5E5E5E),
-                        fontSize: 20,
-                        fontFamily: 'Inria Sans',
-                        fontWeight: FontWeight.w700,
-                        height: 1.10,
-                    ),
-                ),
-            ),
-        ],
-    ),
-);
-  }
-
-  Widget _buildBackgroundImage() {
-    // Use user-provided couple image if available
-    if (backgroundImage.isNotEmpty) {
-      return Image.file(
-        File(backgroundImage),
-        fit: BoxFit.cover,
-      );
-    } 
-    
-    // Otherwise use default image from assets
-    return Image.asset(
-      AssetsClass.images.imageHomeDefault.path,
-      fit: BoxFit.cover,
-    );
-  }
-
-  Widget _buildHeartWithDays(int days) {
-    return Container(
-      width: 160,
-      height: 160,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Golden heart outline
-          CustomPaint(
-            size: const Size(160, 160),
-            painter: HeartPainter(
-              color: const Color(0xFFFFD700).withOpacity(0.9),
-              strokeWidth: 3,
-            ),
+    return Column(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * .6,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            image: backGround.isNotEmpty
+                ? DecorationImage(
+                    image: MemoryImage(base64Decode(backGround)),
+                    fit: BoxFit.cover)
+                : DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(AssetsClass.backrounds.backround1.path)),
           ),
-          
-          // Days count
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
-              Text(
-                days.toString(),
-                style: const TextStyle(
-                  fontSize: 60,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Positioned(
+                left: 10,
+                top: 120,
+                child: Container(
+                  width: 393,
+                  height: 496,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                      //color: Colors.black.withValues(alpha: 26),
+                      ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 300,
+                            child: TabBarView(
+                              controller: tabController,
+                              children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 300,
+                                      width: 300,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              PathImage.im_frame_love),
+                                          fit: BoxFit.fill,
+                                          colorFilter:
+                                              Shared.instance.isMainColor
+                                                  ? ColorFilter.mode(
+                                                      AppColors.accentDark,
+                                                      BlendMode.srcATop)
+                                                  : null,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            context.l10n.beingTogether,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white),
+                                          ),
+                                          Builder(builder: (context) {
+                                            final total = DateTime.now()
+                                                .difference(DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                        loveData.loveday ?? 0));
+                                            return Text(
+                                              '${total.inDays}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge
+                                                  ?.copyWith(
+                                                    color: const Color.fromRGBO(
+                                                        255, 175, 204, 1),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 80,
+                                                  ),
+                                            );
+                                          }),
+                                          Text(
+                                            context.l10n.days,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      width: 350,
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.accentDark
+                                              .withValues(alpha: .2),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              width: 3,
+                                              color: Shared.instance.isMainColor
+                                                  ? AppColors.accentDark
+                                                  : Configs
+                                                      .listColorTheme.first)),
+                                      child: Column(
+                                        spacing: 15,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Builder(builder: (context) {
+                                            final total = DateTime.now()
+                                                .difference(DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                        loveData.loveday ?? 0));
+                                            return Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                buildItemCalculate(
+                                                    title: context.l10n.years,
+                                                    value:
+                                                        '${total.inDays ~/ 365}'),
+                                                buildItemCalculate(
+                                                    title: context.l10n.months,
+                                                    value:
+                                                        '${(total.inDays % 365) ~/ 30}'),
+                                                buildItemCalculate(
+                                                    title: context.l10n.weeks,
+                                                    value:
+                                                        '${((total.inDays % 365) % 30) ~/ 7}'),
+                                                buildItemCalculate(
+                                                    title: context.l10n.days,
+                                                    value:
+                                                        '${((total.inDays % 365) % 30) % 7}'),
+                                              ],
+                                            );
+                                          }),
+                                          Text(
+                                            context
+                                                .l10n.theAnniversarystartdate,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            spacing: 10,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.heart_fill,
+                                                color:
+                                                    Shared.instance.isMainColor
+                                                        ? AppColors.accentDark
+                                                        : Colors.redAccent,
+                                              ),
+                                              Text(
+                                                DateFormat('dd/MM/yyyy').format(
+                                                  DateTime
+                                                      .fromMillisecondsSinceEpoch(
+                                                    loveData.loveday ?? 0,
+                                                  ),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge
+                                                    ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.white),
+                                              ),
+                                              Icon(
+                                                CupertinoIcons.heart_fill,
+                                                color:
+                                                    Shared.instance.isMainColor
+                                                        ? AppColors.accentDark
+                                                        : Colors.redAccent,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: CustomIndotWidget(
+                              tabController: tabController,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const Text(
-                'Days',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+              Positioned(
+                left: 350,
+                top: 55,
+                child: Container(
+                    width: 55,
+                    height: 55,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      //color: Colors.black.withValues(alpha: 38),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(200),
+                      ),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x0C000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: AssetsClass.icons.settings.svg(
+                        width: 55,
+                        color: Shared.instance.isMainColor
+                            ? AppColors.accentDark
+                            : Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const CustomSidebar(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+                              var tween = Tween(begin: begin, end: end).chain(
+                                CurveTween(curve: curve),
+                              );
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                            transitionDuration:
+                                const Duration(milliseconds: 300),
+                            opaque: false,
+                          ),
+                        );
+                      },
+                    )),
+              ),
+              Positioned(
+                left: 304,
+                top: 55,
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    //color: Colors.black.withValues(alpha: 38),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(200),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x0C000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        child: SizedBox(
+                          width: 55,
+                          height: 55,
+                          child: IconButton(
+                              onPressed: () => Navigator.push(
+                                  context, createRouter(LoveStoryPage())),
+                              icon: AssetsClass.icons.calendarHeart.svg(
+                                  width: 40,
+                                  color: Shared.instance.isMainColor
+                                      ? AppColors.accentDark
+                                      : Colors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 10,
+                top: 55,
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    //color: Colors.black.withValues(alpha: 38),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(200),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x0C000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(),
+                          child: IconButton(
+                              onPressed: () {
+                                Fluttertoast.showToast(
+                                    msg: context.l10n.functionunderdevelopment);
+                              },
+                              icon: AssetsClass.images.imageBestSeller.image(
+                                  width: 40, color: AppColors.accentDark)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: -297,
+                top: 413,
+                child: Container(
+                  width: 530,
+                  height: 257,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 182,
+                top: 413,
+                child: Container(
+                  width: 530,
+                  height: 257,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(),
+                  ),
                 ),
               ),
             ],
           ),
-        ],
-      ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * .4,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Column(
+            spacing: 80,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                spacing: 12,
+                children: [
+                  Text(
+                    context.l10n.theDayWeStartedLovingEachOther,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: const Color(0xFF5E5E5E),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      height: 1.38,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 10,
+                    children: [
+                      buildDateDisplay(DateFormat('dd/MM/yyyy').format(
+                        DateTime.fromMillisecondsSinceEpoch(
+                            loveData.loveday ?? 0),
+                      )),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 50,
+                children: [
+                  UserProfileWidget(
+                      imagePath: loveData.imageMen,
+                      shapeType: serviceLocator<SharePrefer>().getShapeType(),
+                      username: loveData.nameMen,
+                      dateOfBirth: loveData.dobMen,
+                      framePath: frame,
+                      defaultUsername: 'Username 1',
+                      defaultImage: AssetsClass.images.imageMen.image(
+                        width: 100,
+                        fit: BoxFit.cover,
+                      )),
+                  AnimationHeartWidget(),
+                  UserProfileWidget(
+                      imagePath: loveData.imageWoman,
+                      shapeType: serviceLocator<SharePrefer>().getShapeType(),
+                      username: loveData.nameWoman,
+                      dateOfBirth: loveData.dobWoman,
+                      framePath: frame,
+                      defaultUsername: 'Username 2',
+                      defaultImage: AssetsClass.images.imageWoman.image(
+                        width: 100,
+                        fit: BoxFit.cover,
+                      )),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 
-  Widget _buildDateDisplay(String date) {
-    if (date.isEmpty) {
-      return const SizedBox.shrink();
-    }
+  Widget buildItemCalculate({required String title, required String value}) {
+    return Column(
+      spacing: 5,
+      children: [
+        Container(
+          width: 56,
+          height: 50,
+          padding: EdgeInsets.only(top: 5),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      AssetsClass.images.imageBackgroundHeart.path))),
+          child: Text(value,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  )),
+        ),
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
+        ),
+      ],
+    );
+  }
 
-    // Split the date to display each character separately
-    List<String> dateChars = date.split('');
+  Widget buildDateDisplay(String dateString) {
+    // Tách chuỗi ngày thành từng ký tự
+    List<String> characters = dateString.split('');
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: dateChars.map((char) {
-        // For numbers, use boxes
-        if (int.tryParse(char) != null) {
+      children: characters.map((char) {
+        // Kiểm tra nếu là số thì hiển thị trong ô tròn
+        if (RegExp(r'[0-9]').hasMatch(char)) {
           return Container(
-            width: 30,
+            width: 40,
             height: 40,
-            margin: const EdgeInsets.symmetric(horizontal: 3),
+            margin: const EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(4),
+              color: Colors.grey[100],
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 2,
+                  offset: const Offset(0, 1),
+                ),
+              ],
             ),
             child: Center(
               child: Text(
                 char,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.accentDark,
                 ),
               ),
             ),
           );
-        } 
-        // For separators, just show text
-        return Container(
-          width: 10,
-          height: 40,
-          child: Center(
+        } else {
+          // Nếu là dấu "/" thì hiển thị bình thường
+          return Container(
+            width: 20,
+            alignment: Alignment.center,
             child: Text(
               char,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[500],
               ),
             ),
-          ),
-        );
+          );
+        }
       }).toList(),
     );
   }
 
-  Widget _buildUserProfilesRow() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          // User 1 profile
-          _buildUserProfile(
-            isUser1: true,
-            name: loveData?.nameMen ?? 'Username 1',
-            dob: loveData?.dobMen ?? 'DD/MM/YYYY',
-            avatarPath: loveData?.imageMen ?? '',
-          ),
-          
-          // Heart icon
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Icon(
-              Icons.favorite,
-              color: AppColors.accentDark,
-              size: 30,
-            ),
-          ),
-          
-          // User 2 profile
-          _buildUserProfile(
-            isUser1: false,
-            name: loveData?.nameWoman ?? 'Username 2',
-            dob: loveData?.dobWoman ?? 'DD/MM/YYYY',
-            avatarPath: loveData?.imageWoman ?? '',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUserProfile({
-    required bool isUser1,
-    required String name,
-    required String dob,
-    required String avatarPath,
-  }) {
-    return GestureDetector(
-      onTap: () => _navigateToUserInfo(isUser1),
-      child: Column(
-        children: [
-          // Avatar
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.orange.shade200,
-            ),
-            child: ClipOval(
-              child: avatarPath.isNotEmpty
-                  ? Image.file(
-                      File(avatarPath),
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    )
-                  : isUser1
-                      ? AssetsClass.images.imageMen.image(fit: BoxFit.cover)
-                      : AssetsClass.images.imageWoman.image(fit: BoxFit.cover),
-            ),
-          ),
-          
-          const SizedBox(height: 8),
-          
-          // Name
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          
-          // Date of birth
-          Text(
-            dob,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.white.withOpacity(0.8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _navigateToUserInfo(bool isUser1) {
-    Navigator.pushNamed(
-      context, 
-      isUser1 ? Routes.maleInfoPage : Routes.femaleInfoPage,
-    );
-  }
-}
-
-// Heart shape painter
-class HeartPainter extends CustomPainter {
-  final Color color;
-  final double strokeWidth;
-
-  HeartPainter({
-    required this.color,
-    this.strokeWidth = 3.0,
-  });
-
   @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round;
-
-    final double width = size.width;
-    final double height = size.height;
-
-    final Path path = Path();
-    path.moveTo(width / 2, height / 5);
-    
-    // Left curve
-    path.cubicTo(
-      width / 4.5, 0, 
-      0, height / 3.5, 
-      width / 2, height * 0.85
-    );
-    
-    // Right curve
-    path.cubicTo(
-      width, height / 3.5, 
-      width * 0.85, 0, 
-      width / 2, height / 5
-    );
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool get wantKeepAlive => true;
 }

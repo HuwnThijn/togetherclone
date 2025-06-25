@@ -327,4 +327,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get beingTogether => 'Cùng nhau';
+
+  @override
+  String get theDayWeStartedLovingEachOther => 'Ngày chúng ta bắt đầu yêu nhau';
 }

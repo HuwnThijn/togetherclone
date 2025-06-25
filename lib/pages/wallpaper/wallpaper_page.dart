@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
 import 'package:lovejourney/cores/themes_app.dart';
@@ -100,14 +101,14 @@ class _WallpaperPageState extends State<WallpaperPage> {
                               .then(
                             (value) {
                               Navigator.pop(context);
-                              Configs.mainKey.currentState!.setState(() {});
+                              serviceLocator<MessagingService>().send(channel: MessageChannel.themeChanged, parameter: true);
                             },
                           );
                         } else {
                           stores.saveBackground(listImage[index]).then(
                             (value) {
                               Navigator.pop(context);
-                              Configs.mainKey.currentState!.setState(() {});
+                              serviceLocator<MessagingService>().send(channel: MessageChannel.themeChanged, parameter: true);
                             },
                           );
                         }

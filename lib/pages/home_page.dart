@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/extentions/messagingservice.dart';
@@ -9,15 +8,10 @@ import 'package:lovejourney/cores/purchase/in_app_purchase.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
-import 'package:lovejourney/cores/ultils.dart';
 import 'package:lovejourney/gen/assets.gen.dart';
-import 'package:lovejourney/l10n/l10n.dart';
 import 'package:lovejourney/pages/bottomsheets/comfirm_pass_bottomsheet.dart';
 import 'package:lovejourney/pages/homeviews/countlove_view.dart';
 import 'package:lovejourney/pages/homeviews/countlove_view2.dart';
-import 'package:lovejourney/pages/love_story/love_story_page.dart';
-import 'package:lovejourney/pages/settings/settings_page.dart';
-import 'package:lovejourney/pages/settings/sidebar_setting.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -130,72 +124,9 @@ class _HomePageState extends State<HomePage> {
           : Colors.black26,
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-                top: Shared.instance.startusBarHeight,
-                left: 10,
-                right: 10,
-                bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Fluttertoast.showToast(
-                          msg: context.l10n.functionunderdevelopment);
-                    },
-                    icon:
-                        AssetsClass.images.imageBestSeller.image(width: 40)),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () => Navigator.push(
-                            context, createRouter(LoveStoryPage())),
-                        icon: AssetsClass.icons.calendarHeart.svg(
-                            width: 40,
-                            color: Shared.instance.isMainColor
-                                ? AppColors.accentDark
-                                : Colors.white)),
-                    IconButton(
-                      icon: AssetsClass.icons.settings.svg(
-                        width: 40,
-                        color: Shared.instance.isMainColor
-                            ? AppColors.accentDark
-                            : Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    const CustomSidebar(),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              const begin = Offset(1.0, 0.0);
-                              const end = Offset.zero;
-                              const curve = Curves.ease;
-                              var tween = Tween(begin: begin, end: end).chain(
-                                CurveTween(curve: curve),
-                              );
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                            transitionDuration:
-                                const Duration(milliseconds: 300),
-                            opaque: false,
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Expanded(child: CountLoveView()),
+          
+
+          Expanded(child: CountLoveView2()),
         ],
       ),
     );

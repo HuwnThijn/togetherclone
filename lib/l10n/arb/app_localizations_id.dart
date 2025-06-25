@@ -327,4 +327,8 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get beingTogether => 'साथ रहना';
+
+  @override
+  String get theDayWeStartedLovingEachOther =>
+      'जिस दिन हमने एक-दूसरे से प्यार करना शुरू किया';
 }

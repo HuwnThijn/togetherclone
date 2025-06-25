@@ -322,4 +322,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get beingTogether => '在一起';
+
+  @override
+  String get theDayWeStartedLovingEachOther => '我们开始相爱的日子';
 }

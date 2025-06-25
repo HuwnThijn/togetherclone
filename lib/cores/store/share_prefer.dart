@@ -302,4 +302,6 @@ class SharePrefer {
         _sharedPreferences.getStringList(StoreKey.listShapePurchaseKey.name);
     return data ?? [ShapeType.circle.name];
   }
+
+  getShapeUser() {}
 }
