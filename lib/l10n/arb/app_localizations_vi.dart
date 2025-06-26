@@ -342,4 +342,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get youDontHaveAnyPhotoFramesYet => 'Bạn chưa có khung ảnh nào!';
+
+  @override
+  String get frameFlower => 'Khung hoa';
+
+  @override
+  String get saved => 'Đã lưu';
+
+  @override
+  String get createSuccess => 'Tạo thành công';
+
+  @override
+  String get shopmemory => 'Cửa hàng kỷ niệm';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get subscribe => 'Đăng ký';
 }

@@ -36,9 +36,7 @@ class _ChooseOptionCameraBottomsheetState
                 _buildOption(
                     AssetsClass.icons.camera.svg(
                         width: 24,
-                        color: Shared.instance.isMainColor
-                            ? AppColors.accentDark
-                            : null),
+                        color: AppColors.accentDark),
                     title: context.l10n.camera,
                     onTap: () => Navigator.pop(context, ImageSource.camera)),
                 Padding(

@@ -68,6 +68,9 @@ class _FemaleInfoPageState extends State<FemaleInfoPage> {
   Future<void> _loadLoveDataAsync() async {
     try {
       loveData = await serviceLocator<SharePrefer>().getLoveday();
+      setState(() {
+        
+      });
     } catch (e) {
       print('Error loading love data: $e');
     }
@@ -228,26 +231,26 @@ class _FemaleInfoPageState extends State<FemaleInfoPage> {
               .pickImage(source: value)
               .then((value) async {
             if (value != null) {
-              if (loveData!.imageWoman.isNotEmpty)
+              if (loveData!.imageWoman.isNotEmpty) {
                 File(loveData!.imageWoman).delete();
+              }
               serviceLocator<SharePrefer>()
                   .saveLoveDay(loveData!.copyWith(
                 imageWoman: await copyImageToCache(await value.readAsBytes(),
                     name: DateTime.now().millisecondsSinceEpoch.toString()),
-                imageMen: loveData!.imageWoman,
+                imageMen: loveData!.imageMen,
                 nameWoman: loveData!.nameWoman,
                 dobWoman: loveData!.dobWoman,
-                nameMen: _nameController.text.trim().isEmpty
-                    ? loveData!.nameMen
-                    : _nameController.text.trim(),
+                nameMen: loveData!.nameMen,
                 dobMen: loveData!.dobMen,
                 gender: loveData!.gender,
                 loveday: loveData!.loveday,
               ))
                   .then(
                 (value) {
+                  serviceLocator<MessagingService>().send(
+                      channel: MessageChannel.userDataChanged, parameter: true);
                   _loadLoveDataAsync();
-                  setState(() {});
                 },
               );
             }

@@ -56,4 +56,5 @@ class MessageChannel {
   static const userDataChanged = 'userDataChanged';
   static const lovedayChanged = 'lovedayChanged';
   static const frameChanged = 'frameChanged';
+  static const memoryPictureChanged = 'memoryPictureChanged';
 }

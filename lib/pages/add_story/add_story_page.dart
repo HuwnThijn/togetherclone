@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
+import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/pages/popups/changed_date_popup.dart';
+import 'package:lovejourney/pages/popups/saved_popup.dart';
 import 'package:lovejourney/pages/set_date/widgets/date_picker_input.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
@@ -26,7 +29,9 @@ class AddStoryPage extends StatefulWidget {
 }
 
 class _AddStoryPageState extends State<AddStoryPage> {
-  String pathImage = '';
+  String? pathImage = '';
+
+  LoveDayModel? loveData;
 
   final _textContentController = TextEditingController();
 
@@ -37,7 +42,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
   late DateTime? dating;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     if (widget.item != null) {
       _textContentController.text = widget.item!.description;
@@ -48,6 +53,11 @@ class _AddStoryPageState extends State<AddStoryPage> {
     } else {
       dating = null;
     }
+    getLoveData();
+  }
+  void getLoveData() async {
+    loveData = await serviceLocator<SharePrefer>().getLoveday();
+    setState(() {});
   }
 
   @override
@@ -108,14 +118,14 @@ class _AddStoryPageState extends State<AddStoryPage> {
                         color: Theme.of(context).cardColor,
                         borderRadius:
                             BorderRadius.circular(Configs.commonRadius),
-                        image: pathImage.isNotEmpty
+                        image: pathImage!.isNotEmpty
                             ? DecorationImage(
-                                image: FileImage(File(pathImage)),
+                                image: FileImage(File(pathImage!)),
                                 fit: BoxFit.cover,
                               )
                             : null,
                       ),
-                      child: pathImage.isEmpty
+                      child: pathImage!.isEmpty
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 15,
@@ -135,6 +145,11 @@ class _AddStoryPageState extends State<AddStoryPage> {
                                             .pickImage(source: value)
                                             .then((value) {
                                           if (value != null) {
+                                            if (pathImage!.isNotEmpty) {
+                                              try {
+                                                File(pathImage!).delete();
+                                              } catch (e) {}
+                                            }
                                             setState(() {
                                               pathImage = value.path;
                                             });
@@ -175,12 +190,12 @@ class _AddStoryPageState extends State<AddStoryPage> {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    // if (pathImage!.isNotEmpty) {
+                                    //     try {
+                                    //       File(pathImage!).delete();
+                                    //     } catch (e) {}
+                                    //   }
                                     setState(() {
-                                      if (pathImage.isNotEmpty) {
-                                        try {
-                                          File(pathImage).delete();
-                                        } catch (e) {}
-                                      }
                                       pathImage = '';
                                     });
                                   },
@@ -241,6 +256,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
                       selectedDate: dating,
                       onTap: _showDatePickerPopup,
                       placeholder: 'DD/MM/YYYY',
+
                     ),
                     TextButton(
                       onPressed: () async {
@@ -248,31 +264,37 @@ class _AddStoryPageState extends State<AddStoryPage> {
                           if (widget.item != null) {
                             final newStory = widget.item!.copyWith(
                               description: _textContentController.text,
-                              image: pathImage.isNotEmpty
+                              image: pathImage!.isNotEmpty
                                   ? await copyImageToCache(
-                                      File(pathImage).readAsBytesSync(),
+                                      File(pathImage!).readAsBytesSync(),
                                       name: DateTime.now()
                                           .millisecondsSinceEpoch
                                           .toString())
                                   : '',
                               date: dating != null ? dating.toString() : '',
                             );
+
                             serviceLocator<SharePrefer>()
                                 .updateLoveStory(newStory)
                                 .then(
                               (value) {
                                 Navigator.pop(context, newStory);
+                                serviceLocator<MessagingService>().send(
+                                    channel:
+                                        MessageChannel.memoryPictureChanged,
+                                    parameter: true);
                               },
                             );
+                            
                           } else {
                             serviceLocator<SharePrefer>()
                                 .saveLoveStory(
                               LoveStoryModel(
                                   id: getRandomString(),
                                   description: _textContentController.text,
-                                  image: pathImage.isNotEmpty
+                                  image: pathImage!.isNotEmpty
                                       ? await copyImageToCache(
-                                          File(pathImage).readAsBytesSync(),
+                                          File(pathImage!).readAsBytesSync(),
                                           name: DateTime.now()
                                               .millisecondsSinceEpoch
                                               .toString())
@@ -283,6 +305,10 @@ class _AddStoryPageState extends State<AddStoryPage> {
                                 .then(
                               (value) {
                                 Navigator.pop(context, true);
+                                serviceLocator<MessagingService>().send(
+                                    channel:
+                                        MessageChannel.memoryPictureChanged,
+                                    parameter: true);
                               },
                             );
                           }
@@ -294,6 +320,10 @@ class _AddStoryPageState extends State<AddStoryPage> {
                         backgroundColor: valid
                             ? AppColors.accentDark
                             : AppColors.accentDark.withValues(alpha: .3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 15),
                       ),
                       child: Text(
                         widget.item != null
@@ -308,51 +338,6 @@ class _AddStoryPageState extends State<AddStoryPage> {
                         ),
                       ),
                     ),
-                    // TextButton(
-                    //   onPressed: () => showModalBottomSheet(
-                    //     context: context,
-                    //     backgroundColor: Colors.transparent,
-                    //     builder: (context) => ChangedChooseBottomsheet(
-                    //       title: context.l10n.pickaDate,
-                    //     ),
-                    //   ).then(
-                    //     (value) {
-                    //       if (value != null) {
-                    //         setState(() {
-                    //           dating = value;
-                    //         });
-                    //       }
-                    //     },
-                    //   ),
-                    //   style: TextButton.styleFrom(
-                    //     minimumSize:
-                    //         Size(double.infinity, Configs.commonHeightButton),
-                    //     backgroundColor: Theme.of(context).cardColor,
-                    //     padding: EdgeInsets.symmetric(horizontal: 15),
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius:
-                    //           BorderRadius.circular(Configs.commonRadius),
-                    //     ),
-                    //   ),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Text(
-                    //         dating == null
-                    //             ? context.l10n.pickaDate
-                    //             : DateFormat('dd-MM-yyyy').format(dating!),
-                    //         style:
-                    //             Theme.of(context).textTheme.titleSmall?.copyWith(
-                    //                   fontWeight: FontWeight.w400,
-                    //                 ),
-                    //       ),
-                    //       Icon(
-                    //         Icons.arrow_drop_down_sharp,
-                    //         color: AppColors.accentDark,
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -374,6 +359,9 @@ class _AddStoryPageState extends State<AddStoryPage> {
               initialDate: DateTime.now(),
               title: context.l10n.pickaDate,
               maximumDate: DateTime.now(),
+              minimumDate: loveData != null && loveData!.loveday != null
+                  ? DateTime.fromMillisecondsSinceEpoch(loveData!.loveday!)
+                  : null,
             ));
     if (picked != null) {
       setState(() {
@@ -381,4 +369,24 @@ class _AddStoryPageState extends State<AddStoryPage> {
       });
     }
   }
+
+//   Future<void> _showSuccessPopup() async {
+//   await showDialog(
+//     context: context,
+//     barrierDismissible: false,
+//     builder: (context) => Dialog(
+//       backgroundColor: Colors.transparent,
+//       child: SavedPopup(
+//         imagePath: AssetsClass.images.saved.path, // Hoặc icon success
+//         title: context.l10n.save,
+//       ),
+//     ),
+//   );
+  
+//   // Tự động đóng popup sau 2 giây
+//   await Future.delayed(const Duration(seconds: 2));
+//   if (mounted) {
+//     Navigator.of(context).pop(); // Đóng popup
+//   }
+// }
 }

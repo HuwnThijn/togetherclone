@@ -755,6 +755,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You don\'t have any photo frames yet!'**
   String get youDontHaveAnyPhotoFramesYet;
+
+  /// No description provided for @frameFlower.
+  ///
+  /// In en, this message translates to:
+  /// **'Frame flower'**
+  String get frameFlower;
+
+  /// No description provided for @saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get saved;
+
+  /// No description provided for @createSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Success'**
+  String get createSuccess;
+
+  /// No description provided for @shopmemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop Memory'**
+  String get shopmemory;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @subscribe.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe'**
+  String get subscribe;
 }
 
 class _AppLocalizationsDelegate

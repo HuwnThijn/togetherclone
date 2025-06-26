@@ -136,6 +136,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/camera.svg
   SvgGenImage get camera => const SvgGenImage('assets/icons/camera.svg');
 
+  /// File path: assets/icons/cash.svg
+  SvgGenImage get cash => const SvgGenImage('assets/icons/cash.svg');
+
   /// File path: assets/icons/circle_check.svg
   SvgGenImage get circleCheck =>
       const SvgGenImage('assets/icons/circle_check.svg');
@@ -213,6 +216,7 @@ class $AssetsIconsGen {
     calendarHeart,
     calenderClock,
     camera,
+    cash,
     circleCheck,
     circleUser,
     circleXmark,
@@ -439,6 +443,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/review.png
   AssetGenImage get review => const AssetGenImage('assets/images/review.png');
 
+  /// File path: assets/images/saved.png
+  AssetGenImage get saved => const AssetGenImage('assets/images/saved.png');
+
   /// File path: assets/images/undraw_maintenance_rjtm.png
   AssetGenImage get undrawMaintenanceRjtm =>
       const AssetGenImage('assets/images/undraw_maintenance_rjtm.png');
@@ -495,6 +502,7 @@ class $AssetsImagesGen {
     imageUndrawSuperthankyouFlq,
     imageWoman,
     review,
+    saved,
     undrawMaintenanceRjtm,
   ];
 }

@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, orientation, screenType) {
           Shared.instance.setContext(context);
           return MaterialApp(
-            key: Configs.mainKey,
+            // key: Configs.mainKey,
             title: '',
             debugShowCheckedModeBanner: false,
             theme: lightTheme,

@@ -107,5 +107,12 @@
   "reviewUs": "Review Us",
   "doYouLoveOurApp": "Do you love our app?",
   "sendSummit": "Send Submit",
-  "youDontHaveAnyPhotoFramesYet": "You don't have any photo frames yet!"
+  "youDontHaveAnyPhotoFramesYet": "You don't have any photo frames yet!",
+  "frameFlower": "Frame flower",
+  "saved": "Saved",
+  "createSuccess": "Create Success",
+  "shopmemory": "Shop Memory",
+  "cash": "Cash",
+  "subscribe": "Subscribe"
+
 }

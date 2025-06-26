@@ -227,8 +227,9 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
               .pickImage(source: value)
               .then((value) async {
             if (value != null) {
-              if (loveData!.imageMen.isNotEmpty)
+              if (loveData!.imageMen.isNotEmpty) {
                 File(loveData!.imageMen).delete();
+              }
               serviceLocator<SharePrefer>()
                   .saveLoveDay(loveData!.copyWith(
                 imageMen: await copyImageToCache(await value.readAsBytes(),
@@ -236,15 +237,15 @@ class _MaleInfoPageState extends State<MaleInfoPage> {
                 imageWoman: loveData!.imageWoman,
                 nameWoman: loveData!.nameWoman,
                 dobWoman: loveData!.dobWoman,
-                nameMen: _nameController.text.trim().isEmpty
-                    ? loveData!.nameMen
-                    : _nameController.text.trim(),
+                nameMen: loveData!.nameMen,
                 dobMen: loveData!.dobMen,
                 gender: loveData!.gender,
                 loveday: loveData!.loveday,
               ))
                   .then(
                 (value) {
+                  serviceLocator<MessagingService>().send(
+                      channel: MessageChannel.userDataChanged, parameter: true);
                   _loadLoveDataAsync();
                   //setState(() {});
                 },

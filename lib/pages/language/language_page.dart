@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
+import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
@@ -17,6 +19,8 @@ class LanguagePage extends StatefulWidget {
 
 class _LanguagePageState extends State<LanguagePage> {
   String keySelected = Shared.instance.languageCode.languageCode;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,8 @@ class _LanguagePageState extends State<LanguagePage> {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-            colorFilter: ColorFilter.mode(AppColors.accentDark, BlendMode.srcATop),
+            colorFilter:
+                ColorFilter.mode(AppColors.accentDark, BlendMode.srcATop),
             image: AssetImage(AssetsClass.images.imageBackgroundLove.path),
             fit: BoxFit.cover),
       ),
@@ -39,7 +44,8 @@ class _LanguagePageState extends State<LanguagePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 10,
           children: [
-            AssetsClass.images.imageUndrawDocumentAnalysis.image(width: 200, color: AppColors.accentDark),
+            AssetsClass.images.imageUndrawDocumentAnalysis
+                .image(width: 200, color: AppColors.accentDark),
             SizedBox(height: 10),
             Center(
               child: Text(context.l10n.language,
@@ -101,8 +107,16 @@ class _LanguagePageState extends State<LanguagePage> {
                 .bodyLarge
                 ?.color
                 ?.withValues(alpha: .05)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+              border: Border.all(
+                  width: 2.5,
+                  color: keySelected == entry.key
+                      ? AppColors.accentDark
+                      : Colors.transparent)),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Row(
             spacing: 10,
             children: [
@@ -118,11 +132,34 @@ class _LanguagePageState extends State<LanguagePage> {
                 ),
               ),
               Expanded(
-                child: Text(entry.value['name'] ?? '',
-                    style: Theme.of(context).textTheme.titleSmall),
-              ),
-              if (keySelected == entry.key)
-                Icon(Icons.check, color: AppColors.ogrange),
+                  child: Text(
+                entry.value['name'] ?? '',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              )),
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: keySelected == entry.key
+                        ? AppColors.accentDark
+                        : Colors.grey.shade400,
+                    width: 0.5,
+                  ),
+                  color: Colors.white,
+                ),
+                child: keySelected == entry.key
+                    ? Center(
+                        child: AssetsClass.icons.circleCheck.svg(
+                          width: 24,
+                          height: 24,
+                        ),
+                      )
+                    : null,
+              )
             ],
           ),
         ),

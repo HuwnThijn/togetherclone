@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
@@ -30,6 +31,29 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
   void initState() {
     super.initState();
     item = widget.item;
+    serviceLocator<MessagingService>().subscribe(this,
+        channel: MessageChannel.memoryPictureChanged, action: (_) => getData());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    serviceLocator<MessagingService>()
+        .unsubscribe(this, channel: MessageChannel.memoryPictureChanged);
+  }
+
+  void getData() async {
+    final data = await serviceLocator<SharePrefer>().getLoveStory();
+
+    final updatedData = data.where(
+      (s) => s.id == widget.item.id,
+    );
+
+    if (updatedData.isNotEmpty && mounted) {
+        setState(() {
+          item = updatedData.first;
+        });
+      }
   }
 
   @override
@@ -59,8 +83,10 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                 ))).then(
               (value) {
                 if (value is LoveStoryModel) {
-                  item = value;
-                  setState(() {});
+                  
+                  setState(() {
+                    item = value;
+                  });
                 }
               },
             ),
@@ -97,7 +123,7 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                         borderRadius:
                             BorderRadius.circular(Configs.commonRadius),
                         image: DecorationImage(
-                          image: FileImage(File(widget.item.image)),
+                          image: FileImage(File(item.image)),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -117,10 +143,10 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                       padding: const EdgeInsets.all(6.0),
                       child: Text(
                         item.description,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color:
-                                  Theme.of(context).textTheme.titleSmall?.color,
-                            ),
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
@@ -129,7 +155,7 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                     style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
@@ -149,7 +175,7 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                             style: TextStyle(
                               color:
                                   Theme.of(context).textTheme.titleSmall?.color,
-                              fontSize: 14,
+                              fontSize: 16,
                             ),
                           ),
                         ),
@@ -179,11 +205,17 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
                       minimumSize:
                           Size(Device.width, Configs.commonHeightButton),
                       backgroundColor: Color(0xffFF0000),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 15)
                     ),
                     child: Text(
                       context.l10n.delete,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
                     ),
                   ),

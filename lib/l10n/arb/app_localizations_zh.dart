@@ -337,4 +337,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get youDontHaveAnyPhotoFramesYet => '您还没有任何照片框！';
+
+  @override
+  String get frameFlower => '花框';
+
+  @override
+  String get saved => '已保存';
+
+  @override
+  String get createSuccess => '创建成功';
+
+  @override
+  String get shopmemory => '回忆商店';
+
+  @override
+  String get cash => '现金';
+
+  @override
+  String get subscribe => '订阅';
 }

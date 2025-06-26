@@ -343,4 +343,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get youDontHaveAnyPhotoFramesYet =>
       'You don\'t have any photo frames yet!';
+
+  @override
+  String get frameFlower => 'Frame flower';
+
+  @override
+  String get saved => 'Saved';
+
+  @override
+  String get createSuccess => 'Create Success';
+
+  @override
+  String get shopmemory => 'Shop Memory';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get subscribe => 'Subscribe';
 }

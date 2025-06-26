@@ -344,4 +344,22 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get youDontHaveAnyPhotoFramesYet =>
       'आपके पास अभी तक कोई फोटो फ्रेम नहीं है!';
+
+  @override
+  String get frameFlower => 'फूलों का फ्रेम';
+
+  @override
+  String get saved => 'सहेजा गया';
+
+  @override
+  String get createSuccess => 'सफलतापूर्वक बनाया गया';
+
+  @override
+  String get shopmemory => 'याद की दुकान';
+
+  @override
+  String get cash => 'नकद';
+
+  @override
+  String get subscribe => 'सदस्यता लें';
 }

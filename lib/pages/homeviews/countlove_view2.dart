@@ -19,6 +19,8 @@ import 'package:lovejourney/pages/homeviews/animation_heart_widget.dart';
 import 'package:lovejourney/pages/homeviews/widgets/user_profile_widget.dart';
 import 'package:lovejourney/pages/love_story/love_story_page.dart';
 import 'package:lovejourney/pages/settings/sidebar_setting.dart';
+import 'package:lovejourney/pages/shop/shop_page.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CountLoveView2 extends StatefulWidget {
   const CountLoveView2({super.key});
@@ -118,11 +120,11 @@ class _CountLoveView2State extends State<CountLoveView2>
           child: Stack(
             children: [
               Positioned(
-                left: 10,
-                top: 120,
+                left: 0.w,
+                top: 14.h,
                 child: Container(
-                  width: 393,
-                  height: 496,
+                  width: 100.w,
+                  height: 37.h,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                       //color: Colors.black.withValues(alpha: 26),
@@ -133,15 +135,15 @@ class _CountLoveView2State extends State<CountLoveView2>
                       Column(
                         children: [
                           SizedBox(
-                            height: 300,
+                            height: 30.h,
                             child: TabBarView(
                               controller: tabController,
                               children: [
                                 Column(
                                   children: [
                                     Container(
-                                      height: 300,
-                                      width: 300,
+                                      height: 30.h,
+                                      width: 30.h,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: AssetImage(
@@ -207,7 +209,7 @@ class _CountLoveView2State extends State<CountLoveView2>
                                     Container(
                                       margin:
                                           EdgeInsets.symmetric(horizontal: 20),
-                                      width: 350,
+                                      width: 70.w,
                                       padding: const EdgeInsets.all(20),
                                       decoration: BoxDecoration(
                                           color: AppColors.accentDark
@@ -321,8 +323,8 @@ class _CountLoveView2State extends State<CountLoveView2>
                 ),
               ),
               Positioned(
-                left: 350,
-                top: 55,
+                right: 2.w,
+                top: 6.h,
                 child: SizedBox(
                     width: 55,
                     height: 55,
@@ -360,9 +362,9 @@ class _CountLoveView2State extends State<CountLoveView2>
                     )),
               ),
               Positioned(
-                left: 304,
-                top: 55,
-                child: Container(
+                right: 12.w,
+                top: 6.h,
+                child: SizedBox(
                   width: 55,
                   height: 55,
                   child: Stack(
@@ -383,8 +385,8 @@ class _CountLoveView2State extends State<CountLoveView2>
                 ),
               ),
               Positioned(
-                left: 10,
-                top: 55,
+                left: 2.w,
+                top: 6.h,
                 child: SizedBox(
                   width: 55,
                   height: 55,
@@ -398,8 +400,7 @@ class _CountLoveView2State extends State<CountLoveView2>
                           decoration: BoxDecoration(),
                           child: IconButton(
                               onPressed: () {
-                                Fluttertoast.showToast(
-                                    msg: context.l10n.functionunderdevelopment);
+                                Navigator.push(context, createRouter(ShopPage()));
                               },
                               icon: AssetsClass.images.imageBestSeller.image(
                                   width: 40, color: AppColors.accentDark)),
@@ -410,8 +411,8 @@ class _CountLoveView2State extends State<CountLoveView2>
                 ),
               ),
               Positioned(
-                left: -297,
-                top: 413,
+                right: 40.w,
+                top: 48.h,
                 child: Container(
                   width: 530,
                   height: 257,
@@ -422,8 +423,8 @@ class _CountLoveView2State extends State<CountLoveView2>
                 ),
               ),
               Positioned(
-                left: 182,
-                top: 413,
+                left: 40.w,
+                top: 48.h,
                 child: Container(
                   width: 530,
                   height: 257,
@@ -488,7 +489,6 @@ class _CountLoveView2State extends State<CountLoveView2>
                       )),
                   AnimationHeartWidget(),
                   UserProfileWidget(
-                    
                       imagePath: loveData.imageWoman,
                       shapeType: serviceLocator<SharePrefer>().getShapeType(),
                       username: loveData.nameWoman,

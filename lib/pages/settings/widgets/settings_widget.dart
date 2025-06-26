@@ -103,7 +103,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             ),
             child: loveData != null
                 ? Text(
-                    DateFormat('dd-MM-yyyy').format(
+                    DateFormat('dd/MM/yyyy').format(
                         DateTime.fromMillisecondsSinceEpoch(
                             loveData!.loveday ?? 0)),
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(

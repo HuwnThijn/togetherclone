@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Widget setMainPage() {
-    if (widget.data.loveday != null && widget.data.isAddPhoto) {
+    if (widget.data.loveday != null) {
       return HomePage(key: Configs.mainKey);
     } else if (!widget.data.isLanguage) {
       return LanguagePage();

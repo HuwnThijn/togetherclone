@@ -48,7 +48,7 @@ class PurchasableProduct {
   }
 
   String getImage(String idProduct) {
-    return AssetsClass.images.imageStar1.path;
+    return AssetsClass.images.imageStar2.path;
     // switch (idProduct) {
     //   case 'most_inapp_0':
     //     return AssetsClass.images.imageStar1.path;

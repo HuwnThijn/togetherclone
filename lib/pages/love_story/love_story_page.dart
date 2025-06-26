@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lovejourney/cores/app_colors.dart';
 import 'package:lovejourney/cores/config.dart';
+import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/love_story_model.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
@@ -30,6 +31,20 @@ class _LoveStoryPageState extends State<LoveStoryPage> {
   void initState() {
     super.initState();
     getdata();
+    serviceLocator<MessagingService>().subscribe(
+      this,
+      channel: MessageChannel.memoryPictureChanged,
+      action: (_) => getdata(),
+    );
+  }
+
+  @override
+  void dispose() {
+    serviceLocator<MessagingService>().unsubscribe(
+      this,
+      channel: MessageChannel.memoryPictureChanged,
+    );
+    super.dispose();
   }
 
   void getdata() {

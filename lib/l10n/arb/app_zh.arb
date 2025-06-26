@@ -107,5 +107,11 @@
   "reviewUs": "评价我们",
   "doYouLoveOurApp": "您喜欢我们的应用吗？",
   "sendSummit": "发送提交",
-  "youDontHaveAnyPhotoFramesYet": "您还没有任何照片框！"
+  "youDontHaveAnyPhotoFramesYet": "您还没有任何照片框！",
+  "frameFlower": "花框",
+  "saved": "已保存",
+  "createSuccess": "创建成功",
+  "shopmemory": "回忆商店",
+  "cash": "现金",
+  "subscribe": "订阅"
 }

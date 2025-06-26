@@ -40,4 +40,6 @@ class LoveStoryModel {
       date: date ?? this.date,
     );
   }
+
+  static empty() {}
 }
