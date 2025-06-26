@@ -340,4 +340,8 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get sendSummit => 'सबमिट भेजें';
+
+  @override
+  String get youDontHaveAnyPhotoFramesYet =>
+      'आपके पास अभी तक कोई फोटो फ्रेम नहीं है!';
 }

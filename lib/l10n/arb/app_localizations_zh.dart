@@ -334,4 +334,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sendSummit => '发送提交';
+
+  @override
+  String get youDontHaveAnyPhotoFramesYet => '您还没有任何照片框！';
 }

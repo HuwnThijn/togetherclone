@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +8,6 @@ import 'package:lovejourney/cores/config.dart';
 import 'package:lovejourney/cores/extentions/messagingservice.dart';
 import 'package:lovejourney/cores/models/loveday_model.dart';
 import 'package:lovejourney/cores/path_image.dart';
-import 'package:lovejourney/cores/routes/routes.dart';
 import 'package:lovejourney/cores/servicelocator/service_locator.dart';
 import 'package:lovejourney/cores/shared.dart';
 import 'package:lovejourney/cores/store/share_prefer.dart';
@@ -37,7 +34,6 @@ class _CountLoveView2State extends State<CountLoveView2>
   bool isLoading = true;
   String frame = '';
   String backGround = '';
-  String backgroundImage = ''; // Optional: background image path
 
   @override
   void initState() {
@@ -53,6 +49,8 @@ class _CountLoveView2State extends State<CountLoveView2>
         channel: MessageChannel.userDataChanged, action: (_) => getLoveData());
     serviceLocator<MessagingService>().subscribe(this,
         channel: MessageChannel.themeChanged, action: (_) => getLoveData());
+    serviceLocator<MessagingService>().subscribe(this,
+        channel: MessageChannel.frameChanged, action: (_) => getLoveData());
   }
 
   @override
@@ -63,6 +61,8 @@ class _CountLoveView2State extends State<CountLoveView2>
         .unsubscribe(this, channel: MessageChannel.userDataChanged);
     serviceLocator<MessagingService>()
         .unsubscribe(this, channel: MessageChannel.themeChanged);
+    serviceLocator<MessagingService>()
+        .unsubscribe(this, channel: MessageChannel.frameChanged);
     super.dispose();
   }
 
@@ -73,7 +73,7 @@ class _CountLoveView2State extends State<CountLoveView2>
 
     try {
       loveData = await serviceLocator<SharePrefer>().getLoveday();
-      frame = serviceLocator<SharePrefer>().getFrameUser();
+      frame = serviceLocator<SharePrefer>().getFrame();
       backGround = serviceLocator<SharePrefer>().getBackground();
 
       setState(() {
@@ -374,9 +374,8 @@ class _CountLoveView2State extends State<CountLoveView2>
                           child: IconButton(
                               onPressed: () => Navigator.push(
                                   context, createRouter(LoveStoryPage())),
-                              icon: AssetsClass.icons.calendarHeart.svg(
-                                  width: 40,
-                                  color: AppColors.accentDark)),
+                              icon: AssetsClass.icons.calendarHeart
+                                  .svg(width: 40, color: AppColors.accentDark)),
                         ),
                       ),
                     ],
@@ -474,7 +473,7 @@ class _CountLoveView2State extends State<CountLoveView2>
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 50,
+                spacing: 30,
                 children: [
                   UserProfileWidget(
                       imagePath: loveData.imageMen,
@@ -489,6 +488,7 @@ class _CountLoveView2State extends State<CountLoveView2>
                       )),
                   AnimationHeartWidget(),
                   UserProfileWidget(
+                    
                       imagePath: loveData.imageWoman,
                       shapeType: serviceLocator<SharePrefer>().getShapeType(),
                       username: loveData.nameWoman,

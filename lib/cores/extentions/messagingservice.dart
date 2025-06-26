@@ -55,4 +55,5 @@ class MessageChannel {
   static const startUserChanged = 'startUserChanged';
   static const userDataChanged = 'userDataChanged';
   static const lovedayChanged = 'lovedayChanged';
+  static const frameChanged = 'frameChanged';
 }

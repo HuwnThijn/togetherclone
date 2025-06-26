@@ -339,4 +339,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendSummit => 'Send Submit';
+
+  @override
+  String get youDontHaveAnyPhotoFramesYet =>
+      'You don\'t have any photo frames yet!';
 }

@@ -339,4 +339,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get sendSummit => 'Gửi đánh giá';
+
+  @override
+  String get youDontHaveAnyPhotoFramesYet => 'Bạn chưa có khung ảnh nào!';
 }

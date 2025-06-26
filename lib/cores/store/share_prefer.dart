@@ -127,16 +127,15 @@ class SharePrefer {
 
   // Buy Frame
   Future<bool> saveFrame(String data) async {
-    final list = getFrame();
-    list.add(data);
-    return _sharedPreferences.setStringList(
-        StoreKey.backgroundImageKey.name, list);
+
+    return _sharedPreferences.setString(
+        StoreKey.FrameKey.name, data);
   }
 
-  List<String> getFrame() {
+  String getFrame() {
     final data =
-        _sharedPreferences.getStringList(StoreKey.backgroundImageKey.name);
-    return data ?? [];
+        _sharedPreferences.getString(StoreKey.FrameKey.name);
+    return data ?? '';
   }
 
   Future<List<String>> getFurureFrame() async {

@@ -7,7 +7,7 @@ class FrameModel {
     required this.path,
   });
 
-  FrameModel.formJson(Map<String, dynamic> json) {
+  FrameModel.fromJson(Map<String, dynamic> json) {
     path = json['path'];
     isBuy = json['isBuy'];
   }

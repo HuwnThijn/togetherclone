@@ -749,6 +749,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send Submit'**
   String get sendSummit;
+
+  /// No description provided for @youDontHaveAnyPhotoFramesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have any photo frames yet!'**
+  String get youDontHaveAnyPhotoFramesYet;
 }
 
 class _AppLocalizationsDelegate

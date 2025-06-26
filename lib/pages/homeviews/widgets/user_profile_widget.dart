@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class UserProfileWidget extends StatelessWidget {
   final Widget defaultImage;
 
   const UserProfileWidget({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.username,
     required this.dateOfBirth,
@@ -27,17 +28,19 @@ class UserProfileWidget extends StatelessWidget {
     this.onTap,
     this.defaultUsername = 'Username',
     required this.defaultImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Avatar with frame
-          Stack(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Avatar with frame
+        SizedBox(
+          width: size + 40,
+          height: size + 40,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
               // Profile image with shape decoration
               Container(
@@ -57,40 +60,35 @@ class UserProfileWidget extends StatelessWidget {
               
               // Optional frame overlay
               if (framePath.isNotEmpty)
-                Positioned(
-                  top: -12,
-                  left: -12,
-                  right: -12,
-                  bottom: -12,
-                  child: Image.asset(
-                    framePath,
-                    width: size,
-                  ),
+                SizedBox(
+                  height: size + 30,
+                  width: size + 30,
+                  child: buildFrameImage(framePath)
                 ),
             ],
           ),
-          
-          const SizedBox(height: 5),
-          
-          // Username
-          Text(
-            username.isNotEmpty ? username : defaultUsername,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87),
-          ),
-          
-          const SizedBox(height: 5),
-          
-          // Date of birth
-          Text(
-            _formatDate(dateOfBirth),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.w500,
-                color: Colors.black54),
-          )
-        ],
-      ),
+        ),
+        
+        const SizedBox(height: 5),
+        
+        // Username
+        Text(
+          username.isNotEmpty ? username : defaultUsername,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87),
+        ),
+        
+        const SizedBox(height: 5),
+        
+        // Date of birth
+        Text(
+          _formatDate(dateOfBirth),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: Colors.black54),
+        )
+      ],
     );
   }
 
@@ -105,4 +103,20 @@ class UserProfileWidget extends StatelessWidget {
       return 'DD/MM/YYYY';
     }
   }
+
+  Widget buildFrameImage(String frameData) {
+  if (frameData.isEmpty) {
+    return Image.asset('assets/frames/frame1.png'); // Frame mặc định
+  }
+  
+  if (frameData.startsWith('assets/')) {
+    return Image.asset(frameData);
+  } 
+  
+  try {
+    return Image.memory(base64Decode(frameData));
+  } catch (e) {
+    return Image.asset('assets/frames/frame1.png'); // Frame mặc định
+  }
+}
 }
